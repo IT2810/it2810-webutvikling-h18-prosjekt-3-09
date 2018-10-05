@@ -1,4 +1,4 @@
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
 
 export const sendNotification = (type, message) => {
   let backgroundColor = "darkgrey"
@@ -17,11 +17,14 @@ export const sendNotification = (type, message) => {
       break;
   }
 
-  Snackbar.show({
-    title: message || "Message",
-    duration: Snackbar.LENGTH_LONG,
-    backgroundColor
-  });
+  console.log(backgroundColor, message);
+  
+
+  // Snackbar.show({
+  //   title: message || "Message",
+  //   duration: Snackbar.LENGTH_LONG,
+  //   backgroundColor
+  // });
 
 }
 
