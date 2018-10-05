@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 
 import Note from '../components/Note'
+import { Icon } from 'react-native-elements';
+import { SortableListView } from 'react-native-sortable-listview'
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -18,6 +20,7 @@ export default class SettingsScreen extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
+          inputTitle: '',
           text: 'Placeholder',
           todoList: [
               {
@@ -33,51 +36,107 @@ export default class SettingsScreen extends React.Component {
                 data: "Task number 3"
             },
           ],
+          isEditing: false,
+          editText: '',
+          editId: 0,
       };
   }
-  deleteNote(id) {
-    this.state.todoList.splice(id, 1)
-    this.setState({ todoList: this.state.todoList})
+
+deleteNote = id => console.log(id) || this.setState(({todoList}) =>  ({todoList: todoList.filter((_e, index) => index !== id)}))
+
+editNote = editId =>  {
+this.setState({isEditing: true, editId, editText: this.state.todoList[editId].data})
 }
   render() {
+    const saveEdit = () => {
+        const {editId, editText} = this.state
+        const todoList = this.state.todoList.slice()
+        todoList[editId].data = editText
+        this.setState({isEditing: false, todoList})
+    }
 
     const showTodo = this.state.todoList.map(({data, title}, index)  => {
         return (
             <View> 
-                <Note id={index} data={data} title={title} deleteMethod={() => this.deleteNote(index)} />
+                <Note id={index} data={data} title={title} 
+                deleteMethod={this.deleteNote} 
+                editNote = {() => this.editNote(index)} />
             </View>
         )
     })
 
     const addNote = () => {
        if (this.state.text){
-            this.state.todoList.push({title: 'Placeholder', 'data': this.state.text})
-            this.setState ({todoList: this.state.todoList})
-            this.setState ({ text: ''});
+            this.state.todoList.push({title: this.state.inputTitle, 'data': this.state.text})
+            this.setState ({todoList: this.state.todoList, text: ''})
         }
         {/* this.setState({
             data: [...this.state.text, {'title':'', 'data': this.state.text}]
         });*/}
     }
 
-    return (
-        <View style={styles.container}>
+    if (this.state.isEditing) {
+        return (
+            <View style={styles.editView}>
+                <TextInput style={styles.input} 
+                    onChangeText={ (editText) => this.setState({editText})}
+                    value={this.state.editText}
+                    underlineColorAndroid='rgba(0,0,0,0)'
+                />
+                <Icon
+                    raised
+                    name='save'
+                    color='#f50'
+                    onPress={saveEdit}
+                />
+            </View>
+        )
+    }
+
+    if(this.state.addNew) {
+        <View style={styles.editView}>
+            <TextInput style={styles.input} 
+                onChangeText={ (text) => this.setState({text})}
+                value={this.state.editText}
+                underlineColorAndroid='rgba(0,0,0,0)'
+            />
             <TextInput style={styles.input} 
                 onChangeText={ (text) => this.setState({text})}
                 value={this.state.text}
-                underlineColorAndroid={'rgba(0,0,0,0)'}
+                underlineColorAndroid='rgba(0,0,0,0)'
             />
-            <ScrollView>
+            <Icon
+                raised
+                name='save'
+                color='#f50'
+                onPress={saveEdit}
+            />
+        </View>
+    }
+
+    return (
+        <ScrollView style={styles.container}>
+            <View>
                 {showTodo}
-            </ScrollView>
+            </View>
+            <TextInput style={styles.input} 
+                onChangeText={ (inputTitle) => this.setState({inputTitle})}
+                value={this.state.inputTitle}
+                underlineColorAndroid='rgba(0,0,0,0)'
+            />
+            <TextInput style={styles.input} 
+                onChangeText={ (text) => this.setState({text})}
+                value={this.state.editText}
+                underlineColorAndroid='rgba(0,0,0,0)'
+            />
             <TouchableOpacity
                 style={styles.addButton}
                 onPress={addNote}
-                accessibilityLabel='Press to add taskk to list'
+                accessibilityLabel='Press to add task to list'
             >
                  <Text style={styles.addButtonText}>+</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     )
   }
 }
