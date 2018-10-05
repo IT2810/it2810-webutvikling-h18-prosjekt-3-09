@@ -4,25 +4,30 @@ import {
     Text,
     View,
     TouchableOpacity
-  } from "react-native";
+} from "react-native";
+import { Icon } from 'react-native-elements';
 
 export default class Note extends React.Component {
       render() { 
-          const {id, title, data, deleteMethod} = this.props
+          const {id, title, data, deleteMethod, editNote} = this.props
           return ( 
               <View id={id} style={styles.note}>
                 
                 <Text style={styles.noteTitle}>{title}</Text>
                 <Text style={styles.noteText}>{data}</Text>
-
-                <TouchableOpacity 
-                    onPress={deleteMethod} 
-                    style={styles.noteDelete}
+                <Icon 
+                    name='delete'
+                    color='#e5547b'
+                    onPress={() => deleteMethod(id)}
                     accessibilityLabel='Press to remove task from list'
-                    >
-                    <Text style={styles.noteDeleteText}>x</Text>
-                </TouchableOpacity>
-
+                    underlayColor='rgba(0,0,0,0)' 
+                />
+               <Icon
+                    raised
+                    name='edit'
+                    color='#f50'
+                    onPress={editNote} 
+                />
               </View>
            );
       }
@@ -31,7 +36,7 @@ export default class Note extends React.Component {
 const styles = StyleSheet.create({
     note: {
     flex: 1,
-    height:70,
+    height:170,
     padding:5,
     margin:2,
     borderWidth:2,
