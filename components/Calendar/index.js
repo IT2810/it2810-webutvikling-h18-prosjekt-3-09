@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import Moment from "moment"
 import "moment-range"
 import Day, {BigDay} from './Day'
 import Navigation from './Navigation'
-// import {sendNotification} from '../Notification'
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import {withStore} from "../Store"
+import {sendNotification} from "../Notification"
 
 import { extendMoment } from 'moment-range';
 
@@ -25,7 +25,20 @@ class Calendar extends Component {
     editedDay: null
   }
 
-  componentDidMount() {this.getWeeks()}
+  async componentDidMount() {
+    this.getWeeks()
+    console.log("Calendar mounted");
+    
+    try {
+      const events = await this.props.actions.getItem("events")
+      console.log(events);
+      
+      this.setState({events: events || []})
+    } catch (error) {
+      sendNotification("error", error)
+    }
+  }
+
 
   componentDidUpdate = (_prevProps, {
     start: prevStart, end: prevEnd, currentMonth: prevCurrentMonth
@@ -48,17 +61,9 @@ class Calendar extends Component {
       onChange(currentStart, currentEnd)
       this.setState({shouldUpdate: false})
     }
-
-    // if (newStart && newEnd && !prevStart && !prevEnd) {
-    //   this.setState({
-    //     start: moment(newStart),
-    //     end: moment(newEnd),
-    //     currentMonth: moment(newStart)
-    //   })
-    // }
-
-
   }
+
+
 
   getWeeks = () => {
     const {currentMonth: month} = this.state
@@ -67,9 +72,7 @@ class Calendar extends Component {
     const weeks = moment.range(
       month.clone().startOf("month").add(-startOffset, "day"),
       month.clone().endOf("month").add(endOffset, "day")
-    )
-
-    
+    )    
     this.setState({
       weeks,
       startOffset,
@@ -89,6 +92,25 @@ class Calendar extends Component {
 
   handleDayChange = day => this.setState(({editedDay}) => ({editedDay: editedDay ? null : day}))
 
+  updateEvents = async events => {
+    try {
+      console.log({events});
+      this.setState({events})
+      await this.props.actions.setItem("events", events)
+    } catch (error) {
+      sendNotification("error", error)
+    }
+  }
+
+  handleCreateEvent = newEvent => console.log({newEvent}) ||
+    this.updateEvents([...this.state.events, newEvent])
+
+  handleDeleteEvent = eventId =>
+    this.updateEvents(this.state.events.slice().filter(({id}) => id !== eventId))
+
+  handleChangeEvent = newEvent =>
+    this.updateEvents(this.state.events.slice().map(oldEvent => id === newEvent.id ? newEvent : oldEvent))
+
 
   render() {
     const {
@@ -106,16 +128,25 @@ class Calendar extends Component {
       <View style={{flex: 1}}>
         {editedDay ? 
         <BigDay
-          value={editedDay}
+          createEvent={this.handleCreateEvent}
+          deleteEvent={this.handleDeleteEvent}
+          changeEvent={this.handleChangeEvent}
           handleClose={this.handleDayChange}
-          events={events.filter(event => event.contains(value))}
+          value={editedDay}
+          events={events
+            .filter(({start, end}) => 
+            moment.range(moment(start), moment(end)).snapTo("day")
+            .contains(editedDay))
+          }
         /> :
         <View style={{flex: 1}}>
           <Grid>
             {month.map((week, key) =>
                 <Row key={key}>
                   {week.map((day, index) => {
-                    let hasEvent = events.length && events.some(period => period.contains(day))
+                    let hasEvent = 
+                      events.some(({start, end}) => 
+                      moment.range(moment(start), moment(end)).snapTo("day").contains(day))
                     const placeholder =
                       day.isBefore(monthStart, "month") ||
                       day.isAfter(monthEnd, "month")
@@ -148,4 +179,4 @@ class Calendar extends Component {
   }
 }
 
-export default Calendar
+export default withStore(Calendar)
