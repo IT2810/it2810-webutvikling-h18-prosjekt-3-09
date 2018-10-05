@@ -3,21 +3,20 @@ import moment from "moment"
 
 import { View, Button, TouchableOpacity, Text, TextInput } from "react-native";
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { Col, Grid } from "react-native-easy-grid";
 import {sendNotification} from "../Notification"
+import {ID, validateEvent} from "../../utils"
 
-
-const Day = ({value, placeholder, onDayChange, today}) =>
+const Day = ({value, placeholder, onDayChange, today, hasEvent}) =>
   <View style={{
-    width: 54,
     height: 54,
     opacity: placeholder ? 0.2 : 1,
-    backgroundColor: today ? "red": "transparent",
-    borderRadius: 27
+    backgroundColor: today ? "red": hasEvent ? "blue" : "transparent",
+    borderRadius: hasEvent ? 0 : 27
     }}
   >
     <TouchableOpacity style={{flex: 1, justifyContent: "center", alignItems: "center"}} onPress={() => onDayChange(value)}>
-      <Text>{value && moment(value).format("D")}</Text>
+      <Text style={{color: hasEvent || today ? "white" : "black"}}>{value && moment(value).format("D")}</Text>
     </TouchableOpacity>
   </View>
 
@@ -27,7 +26,7 @@ export default Day
 export class BigDay extends Component {
 
   state = {
-    start: null,
+    start: new Date(),
     end: null,
     dateType: "start",
     title: "",
@@ -38,7 +37,7 @@ export class BigDay extends Component {
 
   hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
-  handleDatePicked = (date) => {
+  handleDatePicked = date => {
     this.setState({[this.state.dateType]: date})
     this.hideDateTimePicker();
   };
@@ -46,15 +45,20 @@ export class BigDay extends Component {
   handleTitleChange = title => this.setState({title})
 
   handleSave = () => {
-    console.log("validate and save");
-    const valid = false // TODO: Add validate function
-    if (valid) {
+    const {start, end, title} = this.state
+    const newEvent = {
+      id: ID(),
+      title,
+      start,
+      end
+    }
+    const invalid = validateEvent(newEvent)
+    if (!invalid) {
+      this.props.createEvent(newEvent)
       sendNotification("success", "Event is created")
     } else {
-      sendNotification("error", "Invalid event. Please check")
+      sendNotification("error", invalid)
     }
-    this.props.handleClose()
-    
   }
 
 
@@ -64,12 +68,13 @@ export class BigDay extends Component {
     const {value, events} = this.props
     return (
       <View style={{flex: 1}}>
+        <Text>{moment(value).format("MMM DD.")}</Text>
         <Grid>
           <Col>
-            <Button onPress={this.props.handleClose} title="Discard"/>
+            <Button onPress={this.handleSave} title="Save"/>
           </Col>
           <Col>
-            <Button onPress={this.handleSave} title="Save"/>
+            <Button onPress={this.props.handleClose} title="Discard/Close"/>
           </Col>
         </Grid>
         <Grid>
@@ -81,7 +86,7 @@ export class BigDay extends Component {
         <Grid>
           <Col>
             <TouchableOpacity onPress={()=> this.showDateTimePicker("start")}>
-              <Text>Start date {moment(start || value).format("YYYY. MMMM DD")}</Text>
+              <Text>Start date {moment(start).format("YYYY. MMMM DD")}</Text>
             </TouchableOpacity>
           </Col>
           <Col>
@@ -92,7 +97,20 @@ export class BigDay extends Component {
         </Grid>
         <View>
           <Text>Events on this day:</Text>
-          {events.length ? events.map(({title}) => <Text key={title}>{title}</Text>) : <Text>No events for today</Text>}
+          {events.length ? events.map(({id, title}) =>
+            <Grid key={title}>
+              <Col>
+                <Text >{title}</Text>
+              </Col>
+              <Col>
+                <Button onPress={() => console.log("editing ", id)} title="Edit event"/>
+              </Col>
+              <Col>
+                <Button onPress={() => console.log("deleting ", id)} title="Delete event"/>
+              </Col>
+            </Grid>) :
+            <Text>No events for today</Text>
+          }
         </View>
         <DateTimePicker
           date={dateType === "start" ? (start || value.toDate()) : (end || new Date())}
