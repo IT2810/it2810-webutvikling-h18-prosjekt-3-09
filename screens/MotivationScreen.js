@@ -129,7 +129,7 @@ export default class MotivationScreen extends React.Component {
                 console.log("Request to close modal");
             }}>
             <View style={styles.modal}>
-                <Text style={styles.modalTitle}>Nytt mål</Text>
+                <Text style={styles.modalTitle}>{this.state.editGoal ? 'Endre mål' : 'Nytt mål'}</Text>
                 <TextInput
                     style={styles.modalInput}
                     placeholder = 'Målbeskrivelse'
@@ -141,7 +141,7 @@ export default class MotivationScreen extends React.Component {
                         onPress={this.closeAndCreate}
                         style = {styles.modalCreateButton}
                         underlayColor="#00000022">
-                        <Text style={styles.buttonText}>Opprett</Text>
+                        <Text style={styles.buttonText}>{this.state.editGoal ? 'Lagre' : 'Opprett'}</Text>
                     </TouchableHighlight>
                     <TouchableHighlight
                         onPress={this.cancelModal}
