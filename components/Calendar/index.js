@@ -133,11 +133,7 @@ class Calendar extends Component {
           changeEvent={this.handleChangeEvent}
           handleClose={this.handleDayChange}
           value={editedDay}
-          events={events
-            .filter(({start, end}) => 
-            moment.range(moment(start), moment(end)).snapTo("day")
-            .contains(editedDay))
-          }
+          events={events}
         /> :
         <View style={{flex: 1}}>
           <Grid>
