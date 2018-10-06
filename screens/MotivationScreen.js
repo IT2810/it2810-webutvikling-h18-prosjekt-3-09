@@ -9,36 +9,64 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { withStore } from "../components/Store/"
+import {sendNotification} from "../components/Notification"
 
-const tempData = ['Mål 1', 'Mål 2', 'Mål 3', 'Mål 4', 'Mål 5', 'Mål 6', 'Mål 7', 'Mål 8', 'Mål 9', 'Mål 10'];  // Load with asyncstorage
+const tempData = [];  // Load with asyncstorage
 
-export default class MotivationScreen extends React.Component {
+class MotivationScreen extends React.Component {
   static navigationOptions = {
     title: 'Motivation Manager',
 };
+
+
+
   constructor() {
     super();
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: this.ds.cloneWithRows(tempData),  
+      managerData: [],
+      dataSource: this.ds.cloneWithRows([]),     // TODO: initialize empty
       modalVisible: false,   
       modalInput: '',
       editGoal: false,
       editId: -1,
-    };
-
-    
+    }; 
   }
 
+
+  async componentDidMount() {
+      try {
+          const savedData = await this.props.actions.getItem("managerData") // datakey is either string of 'todo' or 'manager', essentially the key of the data where you store it in AsyncStorage
+          this.setState({managerData: savedData || []}) // If no data was found in AsyncStorage, set an empty array
+          tempData = savedData || [];
+          console.log("successfully mounted")
+    } catch (error) {
+      sendNotification("error", error) // To give error feedback
+    }
+ }
+
+ // Use this function to update both the local state, and the database at the same time.
+ updateData = async data => {
+    try {
+      this.setState({data: data})
+      await this.props.actions.setItem("managerData", data)
+      this.updateListRows();
+    } catch (error) {
+      sendNotification("error", error)
+    }
+ }
+
+
   deleteElement = () => {
-      tempData.splice(this.state.editId, 1);
-      this.setState({
+    tempData.splice(this.state.editId, 1);
+    this.setState({
         modalInput: '',
         editGoal: false,
         editId: -1,
-        dataSource: this.ds.cloneWithRows(tempData)
     });
-      this.setModalInvisible();
+    this.updateData(tempData);
+    this.setModalInvisible();
   }
 
   onPressNewGoal = () => {
@@ -48,13 +76,21 @@ export default class MotivationScreen extends React.Component {
   }
 
   cancelModal = () => {
-    this.setState({
-        modalInput: '',
-        editGoal: false,
-        editId: -1,
-        dataSource: this.ds.cloneWithRows(tempData)
-    });
+    if(tempData != [])
+        this.setState({
+            modalInput: '',
+            editGoal: false,
+            editId: -1,
+            dataSource: this.ds.cloneWithRows(tempData)
+        });
     this.setModalInvisible();
+  }
+
+
+  updateListRows = () => {
+      this.setState({
+        dataSource: this.ds.cloneWithRows(tempData)
+      });
   }
 
   setModalInvisible = () => {
@@ -69,12 +105,12 @@ export default class MotivationScreen extends React.Component {
             tempData.push(this.state.modalInput);  // unshift()  prepend, but listview is bugged
         }
         
+        this.updateData(tempData);
         
         this.setState({
             modalInput: '',
             editGoal: false,
             editId: -1,
-            dataSource: this.ds.cloneWithRows(tempData)
         });
         this.setModalInvisible();
     }
@@ -115,6 +151,7 @@ export default class MotivationScreen extends React.Component {
             </TouchableHighlight>
         
             <ListView
+            enableEmptySections={true}
             dataSource={this.state.dataSource}
             renderRow={this.renderListRow}
             style={styles.listElementContainer}
@@ -127,6 +164,7 @@ export default class MotivationScreen extends React.Component {
             style = {styles.modal}
             onRequestClose={() => {
                 console.log("Request to close modal");
+                this.cancelModal
             }}>
             <View style={styles.modal}>
                 <Text style={styles.modalTitle}>{this.state.editGoal ? 'Endre mål' : 'Nytt mål'}</Text>
@@ -165,6 +203,8 @@ export default class MotivationScreen extends React.Component {
   }
 }
 
+export default withStore(MotivationScreen)
+
 const styles = StyleSheet.create({
     pageContainer: {
         flex: 1,
@@ -189,11 +229,11 @@ const styles = StyleSheet.create({
 
     listElement: {
         flex: 1,
+        borderWidth: 2,
         flexDirection: 'row',
         backgroundColor: '#EEEEEE',
         borderStyle: 'solid',
         borderColor: '#DDDDDD',
-        borderWidth: 2,
         borderRadius: 5,
         height: 50,
         marginBottom: 5,
