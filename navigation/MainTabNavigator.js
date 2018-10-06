@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import MotivationScreen from '../screens/MotivationScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -71,9 +72,25 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+
+const MotivationStack = createStackNavigator({
+  Motivation: MotivationScreen,
+});
+
+MotivationStack.navigationOptions = {
+  tabBarLabel: 'Motivation',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+    />
+  ),
+};
+
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   CalendarStack,
   SettingsStack,
+  MotivationStack
 });
