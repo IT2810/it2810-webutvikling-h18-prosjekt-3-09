@@ -10,9 +10,9 @@ import {
 
 import Note from '../components/Note'
 import { Icon } from 'react-native-elements';
-import { SortableListView } from 'react-native-sortable-listview'
+import { withStore } from '../components/Store';
 
-export default class SettingsScreen extends React.Component {
+class TodoScreen extends React.Component {
   static navigationOptions = {
     title: 'Todo',
   };
@@ -21,28 +21,37 @@ export default class SettingsScreen extends React.Component {
       super(props);
       this.state = {
           inputTitle: '',
-          text: 'Placeholder',
-          todoList: [
-              {
-                  title: "Task1",
-                  data: "Task number 1"
-              },
-              {
-                title: "Task2",
-                data: "Task number 2"
-            },
-            {
-                title: "Task3",
-                data: "Task number 3"
-            },
-          ],
+          text: '',
+          todoList: [],
           isEditing: false,
           editText: '',
-          editId: 0,
+          editId: -1,
       };
   }
 
-deleteNote = id => console.log(id) || this.setState(({todoList}) =>  ({todoList: todoList.filter((_e, index) => index !== id)}))
+  async componentDidMount() {
+    try {
+        const savedData = await this.props.actions.getItem("todoList") // datakey is either string of 'todo' or 'manager', essentially the key of the data where you store it in AsyncStorage
+        this.setState({todoList: savedData || []}) // If no data was found in AsyncStorage, set an empty array
+        console.log("successfully mounted")
+  } catch (error) {
+    sendNotification("error", error) // To give error feedback
+  }
+}
+
+updateData = async data => {
+    try {
+      this.setState({data: data})
+      await this.props.actions.setItem("todoList", data)
+    } catch (error) {
+      sendNotification("error", error)
+    }
+ }
+
+deleteNote = id => {
+    console.log(id) || this.setState(({todoList}) =>  ({todoList: todoList.filter((_e, index) => index !== id)}))
+    this.updateData(this.state.todoList)
+}
 
 editNote = editId =>  {
 this.setState({isEditing: true, editId, editText: this.state.todoList[editId].data})
@@ -53,6 +62,7 @@ this.setState({isEditing: true, editId, editText: this.state.todoList[editId].da
         const todoList = this.state.todoList.slice()
         todoList[editId].data = editText
         this.setState({isEditing: false, todoList})
+        this.updateData(this.state.todoList)
     }
 
     const showTodo = this.state.todoList.map(({data, title}, index)  => {
@@ -69,6 +79,7 @@ this.setState({isEditing: true, editId, editText: this.state.todoList[editId].da
        if (this.state.text){
             this.state.todoList.push({title: this.state.inputTitle, 'data': this.state.text})
             this.setState ({todoList: this.state.todoList, text: ''})
+            this.updateData(this.state.todoList)
         }
         {/* this.setState({
             data: [...this.state.text, {'title':'', 'data': this.state.text}]
@@ -140,6 +151,9 @@ this.setState({isEditing: true, editId, editText: this.state.todoList[editId].da
     )
   }
 }
+
+export default withStore(TodoScreen)
+
 const styles = StyleSheet.create({
     input: {
       flex: 1,
