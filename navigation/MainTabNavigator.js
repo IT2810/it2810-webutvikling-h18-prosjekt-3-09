@@ -77,6 +77,6 @@ TodoStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   CalendarStack,
-  MotivationStack
+  MotivationStack,
   TodoStack,
 });

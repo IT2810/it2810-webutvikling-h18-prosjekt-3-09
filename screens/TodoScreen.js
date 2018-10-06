@@ -126,7 +126,7 @@ this.setState({isEditing: true, editId, editText: this.state.todoList[editId].da
             />
             <TextInput style={styles.input} 
                 onChangeText={ (text) => this.setState({text})}
-                value={this.state.editText}
+                value={this.state.text}
                 underlineColorAndroid='rgba(0,0,0,0)'
             />
             <TouchableOpacity
