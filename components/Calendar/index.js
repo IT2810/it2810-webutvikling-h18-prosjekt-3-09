@@ -109,7 +109,7 @@ class Calendar extends Component {
     this.updateEvents(this.state.events.slice().filter(({id}) => id !== eventId))
 
   handleChangeEvent = newEvent =>
-    this.updateEvents(this.state.events.slice().map(oldEvent => id === newEvent.id ? newEvent : oldEvent))
+    this.updateEvents(this.state.events.slice().map(oldEvent => oldEvent.id === newEvent.id ? newEvent : oldEvent))
 
 
   render() {
