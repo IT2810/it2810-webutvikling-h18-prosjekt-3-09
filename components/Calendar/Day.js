@@ -23,14 +23,19 @@ const Day = ({value, placeholder, onDayChange, today, hasEvent}) =>
 export default Day
 
 
+const initialEvent = {
+  id: "",
+  start: null,
+  end: null,
+  title: ""
+}
+
 export class BigDay extends Component {
 
   state = {
-    start: new Date(),
-    end: null,
     dateType: "start",
-    title: "",
     isDateTimePickerVisible: false,
+    ...initialEvent
   };
 
   showDateTimePicker = dateType => this.setState({ isDateTimePickerVisible: true, dateType });
@@ -45,20 +50,38 @@ export class BigDay extends Component {
   handleTitleChange = title => this.setState({title})
 
   handleSave = () => {
-    const {start, end, title} = this.state
-    const newEvent = {
-      id: ID(),
-      title,
-      start,
-      end
+    const {start, end, title, id} = this.state
+
+    const isNewEvent = id === ""
+    let newEvent = {title, start, end}
+    if (isNewEvent) {
+      newEvent = {
+        ...newEvent,
+        id: ID()
+      }
+    } else {
+      newEvent = {...newEvent, id}
     }
+    
     const invalid = validateEvent(newEvent)
     if (!invalid) {
-      this.props.createEvent(newEvent)
+      if (isNewEvent) {
+        this.props.createEvent(newEvent)
+      } else {
+        this.props.changeEvent(newEvent)
+      }
+      this.setState({...initialEvent})
       sendNotification("success", "Event is created")
     } else {
       sendNotification("error", invalid)
     }
+  }
+
+  handleDelete = id => this.props.deleteEvent(id)
+
+  setEditedEvent = eventId => {
+    const {start, end, title} = this.props.events.find(({id}) => id === eventId)
+    this.setState({id: eventId, start, end, title})
   }
 
 
@@ -66,6 +89,7 @@ export class BigDay extends Component {
   render() {
     const {start, end, dateType, title} = this.state
     const {value, events} = this.props
+    
     return (
       <View style={{flex: 1}}>
         <Text>{moment(value).format("MMM DD.")}</Text>
@@ -86,12 +110,12 @@ export class BigDay extends Component {
         <Grid>
           <Col>
             <TouchableOpacity onPress={()=> this.showDateTimePicker("start")}>
-              <Text>Start date {moment(start).format("YYYY. MMMM DD")}</Text>
+              <Text>Start date {start ? moment(start).format("YYYY. MMMM DD"): "not set"}</Text>
             </TouchableOpacity>
           </Col>
           <Col>
             <TouchableOpacity onPress={()=> this.showDateTimePicker("end")}>
-              <Text>End date {end ? moment(end).format("YYYY. MMMM DD") : ""}</Text>
+              <Text>End date {end ? moment(end).format("YYYY. MMMM DD") : "not set"}</Text>
             </TouchableOpacity>
           </Col>
         </Grid>
@@ -103,17 +127,17 @@ export class BigDay extends Component {
                 <Text >{title}</Text>
               </Col>
               <Col>
-                <Button onPress={() => console.log("editing ", id)} title="Edit event"/>
+                <Button onPress={() => this.handleDelete(id)} title="Delete event"/>
               </Col>
               <Col>
-                <Button onPress={() => console.log("deleting ", id)} title="Delete event"/>
+                <Button onPress={() => this.setEditedEvent(id)} title="Edit event"/>
               </Col>
             </Grid>) :
             <Text>No events for today</Text>
           }
         </View>
         <DateTimePicker
-          date={dateType === "start" ? (start || value.toDate()) : (end || new Date())}
+          date={dateType === "start" ? moment(start).toDate() || new Date() : moment(end).toDate() || new Date()}
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
