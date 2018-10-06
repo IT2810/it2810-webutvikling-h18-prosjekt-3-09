@@ -27,12 +27,8 @@ class Calendar extends Component {
 
   async componentDidMount() {
     this.getWeeks()
-    console.log("Calendar mounted");
-    
     try {
       const events = await this.props.actions.getItem("events")
-      console.log(events);
-      
       this.setState({events: events || []})
     } catch (error) {
       sendNotification("error", error)
@@ -94,7 +90,6 @@ class Calendar extends Component {
 
   updateEvents = async events => {
     try {
-      console.log({events});
       this.setState({events})
       await this.props.actions.setItem("events", events)
     } catch (error) {
@@ -102,7 +97,7 @@ class Calendar extends Component {
     }
   }
 
-  handleCreateEvent = newEvent => console.log({newEvent}) ||
+  handleCreateEvent = newEvent =>
     this.updateEvents([...this.state.events, newEvent])
 
   handleDeleteEvent = eventId =>
