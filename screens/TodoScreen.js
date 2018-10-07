@@ -67,8 +67,8 @@ this.setState({isEditing: true, editId, editText: this.state.todoList[editId].da
 
     const showTodo = this.state.todoList.map(({data, title}, index)  => {
         return (
-            <View> 
-                <Note id={index} data={data} title={title} 
+            <View key={index}> 
+                <Note key={index} id={index} data={data} title={title} 
                 deleteMethod={this.deleteNote} 
                 editNote = {() => this.editNote(index)} />
             </View>
