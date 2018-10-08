@@ -1,30 +1,29 @@
 // import Snackbar from 'react-native-snackbar';
 
 export const sendNotification = (type, message) => {
-  let backgroundColor = "darkgrey"
+  let backgroundColor = "darkgrey";
   switch (type) {
     case "success":
-      backgroundColor = "green"
+      backgroundColor = "green";
       break;
     case "warning":
-      backgroundColor = "gold"
+      backgroundColor = "gold";
       break;
     case "error":
-      backgroundColor = "darkred"
+      backgroundColor = "darkred";
       break;
-  
+
     default:
       break;
   }
 
   console.log(backgroundColor, message);
-  
 
-  // Snackbar.show({
-  //   title: message || "Message",
-  //   duration: Snackbar.LENGTH_LONG,
-  //   backgroundColor
-  // });
-
-}
-
+  /*
+   * Snackbar.show({
+   *   title: message || "Message",
+   *   duration: Snackbar.LENGTH_LONG,
+   *   backgroundColor
+   * });
+   */
+};

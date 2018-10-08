@@ -1,21 +1,21 @@
-import React, {Component, createContext} from 'react'
-import { AsyncStorage } from "react-native"
-import {sendNotification} from "./Notification"
-
+import React, { Component, createContext } from "react";
+import { AsyncStorage } from "react-native";
+import { sendNotification } from "./Notification";
 
 /**
  * This function when called, removes everything from AsyncStorage to avoid
  * problems in DEVELOPMENT mode.
- */ 
+ */
+
 const purgeAsyncStorage = async () => {
   try {
-    await AsyncStorage.clear()
-  } catch(error) {
-    sendNotification("error", error)
+    await AsyncStorage.clear();
+  } catch (error) {
+    sendNotification("error", error);
   }
-}
+};
 
-const Store = createContext()
+const Store = createContext();
 /**
  * Makes the Store values available
  * @param {Component} WrappedComponent The component to pass the store values to
@@ -26,51 +26,47 @@ export const withStore = WrappedComponent =>
     render() {
       return (
         <Store.Consumer>
-          {values =>
+          {values => (
             <WrappedComponent
               {...{
                 ...values,
                 ...this.props
               }}
             />
-          }
+          )}
         </Store.Consumer>
-      )
+      );
     }
-  }
-
+  };
 
 /**
  * NOTE: Once in PRODUCTION, Database can be changed to stateless function componnent
  * ie.: No need for componentDidMount lifecycle method.
  */
 export default class Database extends Component {
-
   componentDidMount = async () => {
     /**
      * Purge AsyncStorage on EXPO refresh.
      * REMOVE 🔥 in PRODUCTION ❗
      */
-    purgeAsyncStorage()
-  }
-
+    purgeAsyncStorage();
+  };
 
   /**
    * Read from the Database
    * @param {String} key key of the element to retrieved
-   * @returns {any} the retrieved item 
+   * @returns {any} the retrieved item
    */
   readFromAsyncStorage = async key => {
     try {
       const value = await AsyncStorage.getItem(`@PersonalManagerStore:${key}`);
       console.log("Data was retrieved from AsyncStorage", value);
-      return JSON.parse(value)
+      return JSON.parse(value);
     } catch (error) {
       // Error retrieving data
-      sendNotification("error", error)
+      sendNotification("error", error);
     }
-  }
-  
+  };
 
   /**
    * Write to the Database
@@ -79,13 +75,16 @@ export default class Database extends Component {
    */
   writeToAsyncStorage = async (key, value) => {
     try {
-      await AsyncStorage.setItem(`@PersonalManagerStore:${key}`, JSON.stringify(value));
+      await AsyncStorage.setItem(
+        `@PersonalManagerStore:${key}`,
+        JSON.stringify(value)
+      );
       console.log("Data was written to AsyncStorage", value);
     } catch (error) {
       // Error saving data
-      sendNotification("error", error)
+      sendNotification("error", error);
     }
-  }
+  };
 
   render() {
     return (
@@ -93,13 +92,13 @@ export default class Database extends Component {
         value={{
           actions: {
             getItem: this.readFromAsyncStorage,
-            setItem: this.writeToAsyncStorage,
+            setItem: this.writeToAsyncStorage
           },
           state: this.state
         }}
       >
         {this.props.children}
       </Store.Provider>
-    )
+    );
   }
 }

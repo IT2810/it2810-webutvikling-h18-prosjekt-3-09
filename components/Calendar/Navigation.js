@@ -1,22 +1,20 @@
-import React from 'react'
-import { View} from "react-native"
-import PropTypes from 'prop-types'
-import colors from "../../constants/Colors"
-import { Icon, Button } from 'react-native-elements'
+import React from "react";
+import { View } from "react-native";
+import PropTypes from "prop-types";
+import colors from "../../constants/Colors";
+import { Icon, Button } from "react-native-elements";
 
-
-const Navigation = ({
-  onNavigation, month
-}) => {
+const Navigation = ({ onNavigation, month }) => {
   return (
-    <View style={{
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginHorizontal: 15,
-      marginTop: 16,
-      backgroundColor: colors.color2,
-      borderRadius: 64
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginHorizontal: 15,
+        marginTop: 16,
+        backgroundColor: colors.color2,
+        borderRadius: 64
       }}
     >
       <Icon
@@ -27,7 +25,7 @@ const Navigation = ({
       />
       <Button
         title="Today"
-        icon={{name: "event"}}
+        icon={{ name: "event" }}
         backgroundColor="#000"
         rounded
         onPress={() => onNavigation(0)}
@@ -39,10 +37,9 @@ const Navigation = ({
         onPress={() => onNavigation(1)}
       />
     </View>
-  )
-}
+  );
+};
 
+Navigation.propTypes = { onNavigation: PropTypes.func.isRequired };
 
-Navigation.propTypes = {onNavigation: PropTypes.func.isRequired}
-
-export default Navigation
+export default Navigation;
