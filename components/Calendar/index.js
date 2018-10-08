@@ -4,14 +4,12 @@ import Moment from "moment"
 import "moment-range"
 import Day, {BigDay} from './Day'
 import Navigation from './Navigation'
-import { Col, Row, Grid } from "react-native-easy-grid";
 import {withStore} from "../Store"
 import {sendNotification} from "../Notification"
-
 import { extendMoment } from 'moment-range';
-
 const moment = extendMoment(Moment);
 
+import {Card} from "react-native-elements"
 
 class Calendar extends Component {
 
@@ -88,6 +86,8 @@ class Calendar extends Component {
 
   handleDayChange = day => this.setState(({editedDay}) => ({editedDay: editedDay ? null : day}))
 
+  handleBigDayChange = direction => this.setState(({editedDay}) => ({editedDay: editedDay.clone().add(direction, "day")}))
+
   updateEvents = async events => {
     try {
       this.setState({events})
@@ -120,52 +120,59 @@ class Calendar extends Component {
     const monthStart = currentMonth.clone().startOf("month")
     const monthEnd = currentMonth.clone().endOf("month")
     return (
-      <View style={{flex: 1}}>
-        {editedDay ? 
+        editedDay ? 
         <BigDay
           createEvent={this.handleCreateEvent}
           deleteEvent={this.handleDeleteEvent}
           changeEvent={this.handleChangeEvent}
           handleClose={this.handleDayChange}
+          changeDay={this.handleBigDayChange}
           value={editedDay}
-          events={events}
+          events={events.filter(({start, end}) => moment.range(moment(start), moment(end)).snapTo("day").contains(editedDay))}
         /> :
-        <View style={{flex: 1}}>
-          <Grid>
-            {month.map((week, key) =>
-                <Row key={key}>
-                  {week.map((day, index) => {
-                    let hasEvent = 
-                      events.some(({start, end}) => 
-                      moment.range(moment(start), moment(end)).snapTo("day").contains(day))
-                    const placeholder =
-                      day.isBefore(monthStart, "month") ||
-                      day.isAfter(monthEnd, "month")
-                    return (
-                      <Col key={index}>
-                        <Day
-                          today={day.isSame(moment(), "day")}
-                          onDayChange={this.handleDayChange}
-                          onDayHover={this.handleDayHover}
-                          value={day}
-                          {...{
-                            hasEvent,
-                            placeholder,
-                          }}
-                        />
-                      </Col>
-                    )
-                  })}
-              </Row>
-            )}
-          </Grid>
+        <View style={{flex: 1, justifyContent: "center"}}>
+         
+          <Card
+            containerStyle={{
+              borderRadius: 6,
+              marginTop: 0
+            }}
+            wrapperStyle={{
+              padding: 0
+            }}
+            title={currentMonth.clone().format("YYYY MMMM")}
+          >
+          {month.map((week, key) =>
+              <View style={{flexDirection: "row"}} key={key}>
+                {week.map((day, index) => {
+                  let hasEvent = 
+                    events.some(({start, end}) => 
+                    moment.range(moment(start), moment(end)).snapTo("day").contains(day))
+                  const placeholder =
+                    day.isBefore(monthStart, "month") ||
+                    day.isAfter(monthEnd, "month")
+                  return (
+                    <Day
+                      key={index}
+                      today={day.isSame(moment(), "day")}
+                      onDayChange={this.handleDayChange}
+                      onDayHover={this.handleDayHover}
+                      value={day}
+                      {...{
+                        hasEvent,
+                        placeholder,
+                      }}
+                    />
+                  )
+                })}
+            </View>
+          )}
+          </Card>
           <Navigation
             month={currentMonth}
             onNavigation={this.handleMonthChange}
           />
         </View>
-        }
-      </View>
     )
   }
 }
