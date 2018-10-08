@@ -1,32 +1,44 @@
 import React, {Component} from 'react'
 import moment from "moment"
 
-import { View, Button, TouchableOpacity, Text, TextInput } from "react-native";
+import { ScrollView, View, TouchableOpacity, Text, TextInput } from "react-native";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Col, Grid } from "react-native-easy-grid";
 import {sendNotification} from "../Notification"
 import {ID, validateEvent} from "../../utils"
+import colors from "../../constants/Colors"
+import layout from "../../constants/Layout"
+import {Button, Card, List, ListItem, FormLabel, FormInput, Header} from "react-native-elements"
 
 const Day = ({value, placeholder, onDayChange, today, hasEvent}) =>
-  <View style={{
-    height: 54,
-    opacity: placeholder ? 0.2 : 1,
-    backgroundColor: today ? "red": hasEvent ? "blue" : "transparent",
-    borderRadius: hasEvent ? 0 : 27
+  <Button 
+    disabled={placeholder}
+    containerViewStyle={{
+      height: layout.window.width/7,
+      width: layout.window.width/7,
+      opacity: placeholder ? 0.2 : 1,
+      marginLeft: 0,
+      marginRight: 0,
+      flex: 1
     }}
-  >
-    <TouchableOpacity style={{flex: 1, justifyContent: "center", alignItems: "center"}} onPress={() => onDayChange(value)}>
-      <Text style={{color: hasEvent || today ? "white" : "black"}}>{value && moment(value).format("D")}</Text>
-    </TouchableOpacity>
-  </View>
+    buttonStyle={{
+      flex: 1,
+    }}
+    textStyle={{
+      color: (!hasEvent || placeholder) ? today ? colors.light : colors.dark : colors.light
+    }}
+    backgroundColor={today ? colors.color5 : hasEvent ? colors.color3 : "transparent"}
+    onPress={() => onDayChange(value)}
+    title={moment(value).format("D")}
+  />
 
 export default Day
 
 
 const initialEvent = {
   id: "",
-  start: null,
-  end: null,
+  start: moment().toDate(),
+  end: moment().add(1, "hour").toDate(),
   title: ""
 }
 
@@ -49,6 +61,8 @@ export class BigDay extends Component {
 
   handleTitleChange = title => this.setState({title})
 
+  reset = () => this.setState({...initialEvent})
+
   handleSave = () => {
     const {start, end, title, id} = this.state
 
@@ -70,14 +84,17 @@ export class BigDay extends Component {
       } else {
         this.props.changeEvent(newEvent)
       }
-      this.setState({...initialEvent})
+      this.reset()
       sendNotification("success", "Event is created")
     } else {
       sendNotification("error", invalid)
     }
   }
 
-  handleDelete = id => this.props.deleteEvent(id)
+  handleDelete = id => {
+    this.props.deleteEvent(id)
+    this.reset()
+  }
 
   setEditedEvent = eventId => {
     const {start, end, title} = this.props.events.find(({id}) => id === eventId)
@@ -87,26 +104,46 @@ export class BigDay extends Component {
 
   
   render() {
-    const {start, end, dateType, title} = this.state
+    const {start, end, dateType, title, id} = this.state
     const {value, events} = this.props
+
+    const isNew = id === ""
     
     return (
-      <View style={{flex: 1}}>
-        <Text>{moment(value).format("MMM DD.")}</Text>
-        <Grid>
+      <ScrollView>
+        <Header
+          backgroundColor={colors.color1}
+          centerComponent={{
+            text: moment(value).format("MMM DD."),
+            style:{color: colors.light}
+          }}
+          leftComponent={{ icon: 'arrow-back', color: "#fff", onPress: () => this.props.changeDay(-1)}}
+          rightComponent={{ icon: 'arrow-forward', color: "#fff", onPress: () => this.props.changeDay(1)}}
+        />
+        <Grid style={{marginTop: 16}}>
           <Col>
-            <Button onPress={this.handleSave} title="Save"/>
+            <Button
+              backgroundColor={colors.color1}
+            onPress={this.handleSave} title={isNew ? "Create" : "Save"}/>
           </Col>
           <Col>
-            <Button onPress={this.props.handleClose} title="Discard/Close"/>
+            <Button
+              backgroundColor={colors.color4}
+            
+              onPress={() => isNew ? this.props.handleClose() : this.handleDelete(id)}
+              title={isNew ? "Close" : "Delete"}
+            />
           </Col>
         </Grid>
-        <Grid>
-          <Col><Text>Title</Text></Col>
-          <Col size={4}>
-            <TextInput value={title} onChangeText={this.handleTitleChange}></TextInput>
-          </Col>
-        </Grid>
+        <Card title={`${isNew ? "Create" : "Edit"} event`}>
+        <View style={{flexDirection: "row"}}>
+          <FormLabel>Title</FormLabel>
+          <FormInput
+            placeholder="Enter title"
+            onChangeText={this.handleTitleChange}
+            value={title}
+          />
+        </View>
         <Grid>
           <Col>
             <TouchableOpacity onPress={()=> this.showDateTimePicker("start")}>
@@ -119,30 +156,30 @@ export class BigDay extends Component {
             </TouchableOpacity>
           </Col>
         </Grid>
-        <View>
-          <Text>Events on this day:</Text>
-          {events.length ? events.map(({id, title}) =>
-            <Grid key={title}>
-              <Col>
-                <Text >{title}</Text>
-              </Col>
-              <Col>
-                <Button onPress={() => this.handleDelete(id)} title="Delete event"/>
-              </Col>
-              <Col>
-                <Button onPress={() => this.setEditedEvent(id)} title="Edit event"/>
-              </Col>
-            </Grid>) :
-            <Text>No events for today</Text>
-          }
-        </View>
+
+        </Card>
+        <Card
+          title="Events on this day:"
+        >
+        {events.length ?
+          <List>
+             {events.map(({id, title, start, end}) =>
+              <ListItem 
+                title={title}
+                key={title}
+                subtitle={`${moment(start).format("YYYY-MM-DD")} • ${moment(end).format("YYYY-MM-DD")}`}
+                onPress={() => this.setEditedEvent(id)}
+              />)}
+          </List> :
+            <Text>No events for today</Text>}
+        </Card>
         <DateTimePicker
           date={dateType === "start" ? moment(start).toDate() || new Date() : moment(end).toDate() || new Date()}
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
         />
-      </View>
+      </ScrollView>
     )
   }
 }
