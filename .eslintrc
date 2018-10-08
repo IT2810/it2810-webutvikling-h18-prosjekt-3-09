@@ -1,0 +1,21 @@
+{
+  "parser": "babel-eslint",
+  "extends": "prettier",
+  "plugins": [
+    "prettier",
+    "react",
+    "react-native"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-multiple-empty-lines":"error",
+    "no-console":"warn",
+    "multiline-comment-style":"error"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+    }
+  }
+}
