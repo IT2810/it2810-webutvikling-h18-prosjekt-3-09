@@ -9,19 +9,6 @@ export default class CalendarScreen extends React.Component {
   };
 
   render() {
-    return (
-      <ScrollView style={styles.container}>
-        <Calendar/>
-      </ScrollView>
-    );
+    return <Calendar/>
   }
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
-});
