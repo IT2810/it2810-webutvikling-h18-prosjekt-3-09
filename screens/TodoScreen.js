@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   View,
   ScrollView,
@@ -8,11 +8,21 @@ import {
   TouchableOpacity
 } from "react-native";
 
+import {
+  Icon,
+  Button,
+  Divider,
+  FormLabel,
+  FormInput,
+  FormValidationMessage
+} from "react-native-elements";
 import Note from "../components/Note";
-import { Icon } from "react-native-elements";
+import AddTodo from "../components/Todo/AddTodo";
+import TodoList from "../components/Todo/TodoList";
+import Colors from "../constants/Colors";
 import { withStore } from "../components/Store";
 
-class TodoScreen extends React.Component {
+class TodoScreen extends Component {
   static navigationOptions = {
     title: "Todo"
   };
@@ -25,7 +35,8 @@ class TodoScreen extends React.Component {
       todoList: [],
       isEditing: false,
       editText: "",
-      editId: -1
+      editId: -1,
+      addNew: false
     };
   }
 
@@ -63,102 +74,92 @@ class TodoScreen extends React.Component {
       editText: this.state.todoList[editId].data
     });
   };
-  render() {
-    const saveEdit = () => {
-      const { editId, editText } = this.state;
-      const todoList = this.state.todoList.slice();
-      todoList[editId].data = editText;
-      this.setState({ isEditing: false, todoList });
+  saveEdit = () => {
+    const { editId, editText } = this.state;
+    const todoList = this.state.todoList.slice();
+    todoList[editId].data = editText;
+    this.setState({ isEditing: false, todoList });
+    this.updateData(this.state.todoList);
+  };
+
+  addNote = addNew => {
+    const { text: data, todoList, inputTitle: title } = this.state;
+    if (data) {
+      todoList.push({
+        title,
+        data
+      });
+      this.setState({ todoList: this.state.todoList, text: "", addNew });
       this.updateData(this.state.todoList);
-    };
+    }
+  };
 
-    const showTodo = this.state.todoList.map(({ data, title }, index) => {
+  handleTextChange = text => this.setState({ text });
+
+  createMode = enable => this.setState({ addNew: enable });
+  // LAG HANDLE FUNKSJONER FOR THIS.SETSTATE
+  render() {
+    const {
+      isEditing,
+      editText,
+      addNew,
+      inputTitle,
+      text,
+      todoList
+    } = this.state;
+
+    if (isEditing) {
       return (
-        <View key={index}>
-          <Note
-            key={index}
-            id={index}
-            data={data}
-            title={title}
-            deleteMethod={this.deleteNote}
-            editNote={() => this.editNote(index)}
-          />
-        </View>
-      );
-    });
-
-    const addNote = () => {
-      if (this.state.text) {
-        this.state.todoList.push({
-          title: this.state.inputTitle,
-          data: this.state.text
-        });
-        this.setState({ todoList: this.state.todoList, text: "" });
-        this.updateData(this.state.todoList);
-      }
-      {
-        /*
-         * this.setState({
-         * data: [...this.state.text, {'title':'', 'data': this.state.text}]
-         *});
-         */
-      }
-    };
-
-    if (this.state.isEditing) {
-      return (
-        <View style={styles.editView}>
-          <TextInput
-            style={styles.input}
+        <View>
+          <FormLabel labelStyle={styles.labelStyle}>Edit your todo</FormLabel>
+          <FormInput
+            placeholder="Edit todo"
+            value={editText}
             onChangeText={editText => this.setState({ editText })}
-            value={this.state.editText}
-            underlineColorAndroid="rgba(0,0,0,0)"
           />
-          <Icon raised name="save" color="#f50" onPress={saveEdit} />
+          <AddTodo text="Save edit" onPress={this.saveEdit} />
         </View>
       );
     }
 
-    if (this.state.addNew) {
-      <View style={styles.editView}>
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({ text })}
-          value={this.state.editText}
-          underlineColorAndroid="rgba(0,0,0,0)"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({ text })}
-          value={this.state.text}
-          underlineColorAndroid="rgba(0,0,0,0)"
-        />
-        <Icon raised name="save" color="#f50" onPress={saveEdit} />
-      </View>;
+    if (addNew) {
+      return (
+        <View>
+          <FormLabel labelStyle={styles.labelStyle}>Title</FormLabel>
+          <FormInput
+            placeholder="Enter title"
+            value={inputTitle}
+            onChangeText={inputTitle => this.setState({ inputTitle })}
+          />
+          <Divider style={styles.lightDivider} />
+          <FormLabel labelStyle={styles.labelStyle}>Todo</FormLabel>
+          <FormInput
+            placeholder="What needs doing?"
+            value={text}
+            onChangeText={text => this.setState({ text })}
+          />
+          <Divider style={styles.lightDivider} />
+          <AddTodo text="Save todo" onPress={() => this.addNote(false)} />
+        </View>
+      );
     }
-
     return (
-      <ScrollView style={styles.container}>
-        <View>{showTodo}</View>
-        <TextInput
-          style={styles.input}
-          onChangeText={inputTitle => this.setState({ inputTitle })}
-          value={this.state.inputTitle}
-          underlineColorAndroid="rgba(0,0,0,0)"
+      <ScrollView>
+        <AddTodo text="Add new todo" onPress={() => this.createMode(true)} />
+        <Divider
+          style={{
+            backgroundColor: Colors.dark,
+            marginTop: 10,
+            marginBottom: 20
+          }}
         />
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({ text })}
-          value={this.state.text}
-          underlineColorAndroid="rgba(0,0,0,0)"
-        />
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={addNote}
-          accessibilityLabel="Press to add task to list"
-        >
-          <Text style={styles.addButtonText}>+</Text>
-        </TouchableOpacity>
+        <View>
+          <TodoList
+            todoList={todoList}
+            deleteMethod={this.deleteNote}
+            editNote={this.editNote}
+          />
+        </View>
       </ScrollView>
     );
   }
@@ -167,36 +168,15 @@ class TodoScreen extends React.Component {
 export default withStore(TodoScreen);
 
 const styles = StyleSheet.create({
-  input: {
-    flex: 1,
-    backgroundColor: "#fff"
+  labelStyle: {
+    fontSize: 25,
+    textDecorationLine: "underline",
+    color: Colors.dark
   },
-  box: {
-    height: 100,
-    width: 100,
-    backgroundColor: "skyblue"
-  },
-  input: {
-    paddingTop: 10,
-    height: 60,
-    borderColor: "gray",
-    borderWidth: 1
-  },
-  addButton: {
-    borderWidth: 1,
-    borderColor: '"rgba(0,0,0,0.2)"',
-    alignItems: "center",
-    justifyContent: "center",
-    width: 100,
-    height: 100,
-    left: 5,
-    backgroundColor: "#54b2e5",
-    borderRadius: 100
-  },
-  addButtonText: {
-    fontSize: 50,
-    color: "white",
-    alignItems: "center",
-    justifyContent: "center"
+  inputStyle: { fontSize: 14 },
+  lightDivider: {
+    backgroundColor: Colors.lightgrey,
+    marginTop: 5,
+    marginBottom: 5
   }
 });
