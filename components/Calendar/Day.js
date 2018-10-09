@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 
-import {
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput
-} from "react-native";
+import { ScrollView, View, TouchableOpacity, Text } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Col, Grid } from "react-native-easy-grid";
 import { sendNotification } from "../Notification";

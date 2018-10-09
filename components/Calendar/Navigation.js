@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import colors from "../../constants/Colors";
 import { Icon, Button } from "react-native-elements";
 
-const Navigation = ({ onNavigation, month }) => {
+const Navigation = ({ onNavigation }) => {
   return (
     <View
       style={{
