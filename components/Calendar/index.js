@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import Moment from "moment";
 import "moment-range";
-import Day, { BigDay } from "./Day";
+import Day from "./Day";
+import BigDay from "./BigDay";
 import Navigation from "./Navigation";
 import { withStore } from "../Store";
 import { sendNotification } from "../Notification";
@@ -32,19 +33,8 @@ class Calendar extends Component {
     }
   }
 
-  componentDidUpdate = (
-    _prevProps,
-    { start: prevStart, end: prevEnd, currentMonth: prevCurrentMonth }
-  ) => {
-    const {
-      onChange,
-      min
-      /*
-       * range: {
-       *   start: newStart, end: newEnd
-       * }
-       */
-    } = this.props;
+  componentDidUpdate = (_prevProps, { currentMonth: prevCurrentMonth }) => {
+    const { onChange, min } = this.props;
 
     const { currentMonth, start: currentStart, end: currentEnd } = this.state;
 
@@ -155,13 +145,8 @@ class Calendar extends Component {
     ) : (
       <View style={{ flex: 1, justifyContent: "center" }}>
         <Card
-          containerStyle={{
-            borderRadius: 6,
-            marginTop: 0
-          }}
-          wrapperStyle={{
-            padding: 0
-          }}
+          containerStyle={{ borderRadius: 6, marginTop: 0 }}
+          wrapperStyle={{ padding: 0 }}
           title={currentMonth.clone().format("YYYY MMMM")}
         >
           {month.map((week, key) => (
