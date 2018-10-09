@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 
-import { ScrollView, View, TouchableOpacity, Text } from "react-native";
+import { ScrollView, View, TouchableOpacity } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Col, Grid } from "react-native-easy-grid";
 import { sendNotification } from "../Notification";
@@ -15,7 +15,8 @@ import {
   ListItem,
   FormLabel,
   FormInput,
-  Header
+  Header,
+  Text
 } from "react-native-elements";
 
 const Day = ({ value, placeholder, onDayChange, today, hasEvent }) => (
@@ -164,34 +165,25 @@ export class BigDay extends Component {
           </Col>
         </Grid>
         <Card title={`${isNew ? "Create" : "Edit"} event`}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", marginBottom: 8 }}>
             <FormLabel>Title</FormLabel>
             <FormInput
+              inputStyle={{ borderColor: "black", borderBottomWidth: 1 }}
               placeholder="Enter title"
               onChangeText={this.handleTitleChange}
               value={title}
             />
           </View>
-          <Grid>
-            <Col>
-              <TouchableOpacity
-                onPress={() => this.showDateTimePicker("start")}
-              >
-                <Text>
-                  Start date{" "}
-                  {start ? moment(start).format("YYYY. MMMM DD") : "not set"}
-                </Text>
-              </TouchableOpacity>
-            </Col>
-            <Col>
-              <TouchableOpacity onPress={() => this.showDateTimePicker("end")}>
-                <Text>
-                  End date{" "}
-                  {end ? moment(end).format("YYYY. MMMM DD") : "not set"}
-                </Text>
-              </TouchableOpacity>
-            </Col>
-          </Grid>
+          <DateInput
+            label="Start date"
+            onPress={() => this.showDateTimePicker("start")}
+            value={start}
+          />
+          <DateInput
+            label="End date"
+            onPress={() => this.showDateTimePicker("end")}
+            value={end}
+          />
         </Card>
         <Card title="Events on this day:">
           {events.length ? (
@@ -212,11 +204,9 @@ export class BigDay extends Component {
           )}
         </Card>
         <DateTimePicker
-          date={
-            dateType === "start"
-              ? moment(start).toDate() || new Date()
-              : moment(end).toDate() || new Date()
-          }
+          date={moment(
+            (dateType === "start" ? start : end) || undefined
+          ).toDate()}
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this.handleDatePicked}
           onCancel={this.hideDateTimePicker}
@@ -225,3 +215,28 @@ export class BigDay extends Component {
     );
   }
 }
+
+const DateInput = ({ label, onPress, value }) => (
+  <View
+    style={{
+      marginVertical: 8,
+      flexDirection: "row",
+      alignItems: "baseline",
+      justifyContent: "space-between"
+    }}
+  >
+    <FormLabel>{label}</FormLabel>
+    <Text
+      onPress={onPress}
+      style={{
+        color: "grey",
+        fontSize: 14,
+        padding: 8,
+        borderWidth: 1,
+        borderColor: "black"
+      }}
+    >
+      {value ? moment(value).format("YYYY. MMMM DD") : "not set"}
+    </Text>
+  </View>
+);
