@@ -1,6 +1,5 @@
 import React from "react";
 import { View } from "react-native";
-import PropTypes from "prop-types";
 import colors from "../../constants/Colors";
 import { Icon, Button } from "react-native-elements";
 
@@ -39,7 +38,5 @@ const Navigation = ({ onNavigation }) => {
     </View>
   );
 };
-
-Navigation.propTypes = { onNavigation: PropTypes.func.isRequired };
 
 export default Navigation;
