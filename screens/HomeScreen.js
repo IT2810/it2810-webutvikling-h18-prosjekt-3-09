@@ -35,7 +35,6 @@ export default class HomeScreen extends React.Component {
 
         <View style={styles.withLoveContainer}>
           <MonoText>{"<>"} with ♥ by</MonoText>
-          warning"
           <Text />
         </View>
         <View>
