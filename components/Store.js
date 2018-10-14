@@ -60,7 +60,7 @@ export default class Database extends Component {
   readFromAsyncStorage = async key => {
     try {
       const value = await AsyncStorage.getItem(`@PersonalManagerStore:${key}`);
-      console.log("Data was retrieved from AsyncStorage", value);
+      // console.log("Data was retrieved from AsyncStorage", value);
       return JSON.parse(value);
     } catch (error) {
       // Error retrieving data
@@ -79,7 +79,7 @@ export default class Database extends Component {
         `@PersonalManagerStore:${key}`,
         JSON.stringify(value)
       );
-      console.log("Data was written to AsyncStorage", value);
+      // console.log("Data was written to AsyncStorage", value);
     } catch (error) {
       // Error saving data
       sendNotification("error", error);

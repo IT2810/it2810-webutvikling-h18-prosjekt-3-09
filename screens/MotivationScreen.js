@@ -37,7 +37,7 @@ class MotivationScreen extends React.Component {
       const savedData = await this.props.actions.getItem("managerData"); // datakey is either string of 'todo' or 'manager', essentially the key of the data where you store it in AsyncStorage
       this.setState({ managerData: savedData || [] }); // If no data was found in AsyncStorage, set an empty array
       tempData = savedData || [];
-      console.log("successfully mounted");
+      // console.log("successfully mounted");
     } catch (error) {
       sendNotification("error", error); // To give error feedback
     }
@@ -154,7 +154,7 @@ class MotivationScreen extends React.Component {
           visible={this.state.modalVisible}
           style={styles.modal}
           onRequestClose={() => {
-            console.log("Request to close modal");
+            // console.log("Request to close modal");
             this.cancelModal;
           }}
         >

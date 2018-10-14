@@ -17,7 +17,7 @@ export const sendNotification = (type, message) => {
       break;
   }
 
-  console.log(backgroundColor, message);
+  // console.log(backgroundColor, message);
 
   /*
    * Snackbar.show({

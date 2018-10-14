@@ -33,7 +33,7 @@ class TodoScreen extends React.Component {
     try {
       const savedData = await this.props.actions.getItem("todoList"); // datakey is either string of 'todo' or 'manager', essentially the key of the data where you store it in AsyncStorage
       this.setState({ todoList: savedData || [] }); // If no data was found in AsyncStorage, set an empty array
-      console.log("successfully mounted");
+      // console.log("successfully mounted");
     } catch (error) {
       sendNotification("error", error); // To give error feedback
     }
