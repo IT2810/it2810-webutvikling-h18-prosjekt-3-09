@@ -136,7 +136,6 @@ export default class extends Component {
           <View style={{ flexDirection: "row", marginBottom: 8 }}>
             <FormLabel>Title</FormLabel>
             <FormInput
-              inputStyle={{ borderColor: "black", borderBottomWidth: 1 }}
               placeholder="Enter title"
               onChangeText={this.handleTitleChange}
               value={title}
