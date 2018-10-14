@@ -49,10 +49,10 @@ class TodoScreen extends React.Component {
   };
 
   deleteNote = id => {
-    console.log(id) ||
-      this.setState(({ todoList }) => ({
-        todoList: todoList.filter((_e, index) => index !== id)
-      }));
+    // console.log(id) ||
+    this.setState(({ todoList }) => ({
+      todoList: todoList.filter((_e, index) => index !== id)
+    }));
     this.updateData(this.state.todoList);
   };
 
