@@ -81,7 +81,7 @@ exports[`DateInput snapshot renders correctly 1`] = `
       ]
     }
   >
-    2018. October 15
+    2018. October 16
   </Text>
 </View>
 `;

@@ -3,6 +3,7 @@ import BigDay from "../BigDay";
 import renderer from "react-test-renderer";
 import Moment from "moment";
 import { extendMoment } from "moment-range";
+import * as notification from "../../Notification";
 
 const moment = extendMoment(Moment);
 
@@ -15,6 +16,8 @@ describe("BigDay snapshot.", () => {
       .toDate(),
     title: ""
   };
+
+  const invalidID = null;
 
   const testEvent = {
     id: "0000",
@@ -30,7 +33,12 @@ describe("BigDay snapshot.", () => {
   let tree;
   beforeAll(() => {
     tree = renderer.create(
-      <BigDay events={[testEvent]} deleteEvent={jest.fn()} />
+      <BigDay
+        events={[testEvent]}
+        deleteEvent={jest.fn()}
+        createEvent={jest.fn()}
+        changeEvent={jest.fn()}
+      />
     );
   });
   test("renders correctly", () => {
@@ -138,9 +146,26 @@ describe("BigDay snapshot.", () => {
     });
 
     describe("Save event", () => {
-      test("event is saved", () => {
+      beforeEach(() => {
+        tree.toTree().instance.state.title = testEvent.title;
+        tree.toTree().instance.state.start = testEvent.start;
+        tree.toTree().instance.state.end = testEvent.end;
+      });
+      test("new event created", () => {
+        tree.toTree().instance.state.id = "";
         tree.toTree().instance.handleSave();
-        //NOTE: Finish test
+        expect(tree.toTree().instance.props.createEvent).toBeCalled();
+      });
+      test("event change was saved", () => {
+        tree.toTree().instance.state.id = testEvent.id;
+        tree.toTree().instance.handleSave();
+        expect(tree.toTree().instance.props.changeEvent).toBeCalled();
+      });
+      test("invalid event sends notification", () => {
+        notification.sendNotification = jest.fn();
+        tree.toTree().instance.state.id = invalidID;
+        tree.toTree().instance.handleSave();
+        expect(notification.sendNotification).toBeCalled();
       });
     });
 
