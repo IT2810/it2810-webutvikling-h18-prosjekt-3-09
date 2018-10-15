@@ -81,6 +81,10 @@ class TodoScreen extends Component {
 
   handleTextChange = text => this.setState({ text });
 
+  handleEditTextChange = editText => this.setState({ editText });
+
+  handleTitleChange = inputTitle => this.setState({ inputTitle });
+
   createMode = enable => this.setState({ addNew: enable });
 
   render() {
@@ -100,7 +104,7 @@ class TodoScreen extends Component {
           <FormInput
             placeholder="Edit todo"
             value={editText}
-            onChangeText={editText => this.setState({ editText })}
+            onChangeText={editText => this.handleEditTextChange(editText)}
           />
           <AddTodo text="Save edit" onPress={this.saveEdit} />
         </View>
@@ -114,14 +118,14 @@ class TodoScreen extends Component {
           <FormInput
             placeholder="Enter title"
             value={inputTitle}
-            onChangeText={inputTitle => this.setState({ inputTitle })}
+            onChangeText={inputTitle => this.handleTitleChange(inputTitle)}
           />
           <Divider style={styles.lightDivider} />
           <FormLabel labelStyle={styles.labelStyle}>Todo</FormLabel>
           <FormInput
             placeholder="What needs doing?"
             value={text}
-            onChangeText={text => this.setState({ text })}
+            onChangeText={text => this.handleTextChange(text)}
           />
           <Divider style={styles.lightDivider} />
           <AddTodo text="Save todo" onPress={() => this.addNote(false)} />
