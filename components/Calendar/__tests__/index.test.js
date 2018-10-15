@@ -6,7 +6,7 @@ import { extendMoment } from "moment-range";
 
 const moment = extendMoment(Moment);
 
-describe("Calendar snapshot.", () => {
+describe("Calendar snapshot", () => {
   let tree;
   beforeAll(() => {
     tree = renderer.create(<Calendar />);

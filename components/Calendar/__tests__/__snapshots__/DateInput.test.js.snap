@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateInput snapshot renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "baseline",
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "marginVertical": 8,
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {},
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          Array [
+            Object {
+              "color": "#86939e",
+              "fontSize": 15,
+              "fontWeight": "bold",
+              "marginBottom": 1,
+              "marginLeft": 20,
+              "marginRight": 20,
+              "marginTop": 15,
+            },
+            undefined,
+            undefined,
+          ],
+        ]
+      }
+    >
+      Test
+    </Text>
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[MockFunction]}
+    style={
+      Array [
+        Object {},
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        Object {
+          "borderColor": "black",
+          "borderWidth": 1,
+          "color": "grey",
+          "fontSize": 14,
+          "padding": 8,
+        },
+      ]
+    }
+  >
+    2018. October 15
+  </Text>
+</View>
+`;

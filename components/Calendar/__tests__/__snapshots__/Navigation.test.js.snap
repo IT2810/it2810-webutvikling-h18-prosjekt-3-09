@@ -1,0 +1,297 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation snapshot renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#251e3e",
+      "borderRadius": 64,
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "marginHorizontal": 15,
+      "marginTop": 16,
+    }
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "margin": 7,
+        },
+        Object {
+          "borderRadius": 28,
+          "height": 52,
+          "width": 52,
+        },
+        Object {
+          "shadowColor": "rgba(0,0,0, .4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 1,
+          },
+          "shadowOpacity": 1,
+          "shadowRadius": 1,
+        },
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "black",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "marginLeft": 15,
+          "marginRight": 15,
+        },
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={null}
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <View
+        pointerEvents="box-only"
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#9E9E9E",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 19,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            Object {
+              "backgroundColor": "#000",
+            },
+            undefined,
+            Object {
+              "padding": 12,
+            },
+            Object {
+              "borderRadius": 66.5,
+              "paddingHorizontal": 18,
+            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "white",
+                "fontSize": 18,
+              },
+              Array [
+                Object {
+                  "marginRight": 10,
+                },
+                undefined,
+              ],
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {},
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                },
+                undefined,
+                Object {
+                  "fontSize": 17.5,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+              ],
+            ]
+          }
+        >
+          Today
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "margin": 7,
+        },
+        Object {
+          "borderRadius": 28,
+          "height": 52,
+          "width": 52,
+        },
+        Object {
+          "shadowColor": "rgba(0,0,0, .4)",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 1,
+          },
+          "shadowOpacity": 1,
+          "shadowRadius": 1,
+        },
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "black",
+          "justifyContent": "center",
+        },
+        undefined,
+      ]
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "white",
+            "fontSize": 24,
+          },
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+</View>
+`;
