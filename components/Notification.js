@@ -17,13 +17,13 @@ export const sendNotification = (type, message) => {
       break;
   }
 
-  // console.log(backgroundColor, message);
-
   /*
+   * TODO: Fix notification
    * Snackbar.show({
    *   title: message || "Message",
    *   duration: Snackbar.LENGTH_LONG,
    *   backgroundColor
    * });
    */
+  return { backgroundColor, message };
 };
