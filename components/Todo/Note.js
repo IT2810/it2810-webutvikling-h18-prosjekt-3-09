@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Icon, Card, Button, Divider } from "react-native-elements";
-import Colors from "../constants/Colors";
+import { Icon, Card, Divider } from "react-native-elements";
+import Colors from "../../constants/Colors";
 
 export default class Note extends Component {
   render() {

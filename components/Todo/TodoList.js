@@ -1,5 +1,5 @@
 import React from "react";
-import Note from "../Note";
+import Note from "./Note";
 import { View } from "react-native";
 
 export default ({ todoList, deleteMethod, editNote }) =>
