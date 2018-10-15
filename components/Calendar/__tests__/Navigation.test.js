@@ -11,4 +11,17 @@ describe("Navigation snapshot", () => {
   test("renders correctly", () => {
     expect(tree).toMatchSnapshot();
   });
+
+  test("previous month pressed", () => {
+    tree.toTree().rendered.props.children[0].props.onPress();
+    expect(tree.toTree().props.onNavigation).toBeCalledWith(-1);
+  });
+  test("day pressed", () => {
+    tree.toTree().rendered.props.children[1].props.onPress();
+    expect(tree.toTree().props.onNavigation).toBeCalledWith(0);
+  });
+  test("next month pressed", () => {
+    tree.toTree().rendered.props.children[2].props.onPress();
+    expect(tree.toTree().props.onNavigation).toBeCalledWith(1);
+  });
 });

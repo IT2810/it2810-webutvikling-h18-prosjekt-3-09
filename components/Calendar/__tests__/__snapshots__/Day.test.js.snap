@@ -111,7 +111,7 @@ exports[`Day snapshot renders correctly 1`] = `
           ]
         }
       >
-        15
+        16
       </Text>
     </View>
   </View>
