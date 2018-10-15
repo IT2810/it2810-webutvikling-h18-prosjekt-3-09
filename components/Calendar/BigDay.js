@@ -29,6 +29,10 @@ const initialEvent = {
 };
 
 export default class extends Component {
+  static defaultProps = {
+    events: []
+  };
+
   state = {
     dateType: "start",
     isDateTimePickerVisible: false,
