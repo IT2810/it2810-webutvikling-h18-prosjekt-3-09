@@ -10,7 +10,11 @@
     "test": "node ./node_modules/jest/bin/jest.js --watchAll"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
@@ -35,7 +39,8 @@
     "husky": "^1.1.1",
     "jest-expo": "30.0.0",
     "prettier": "^1.14.3",
-    "pretty-quick": "^1.7.0"
+    "pretty-quick": "^1.7.0",
+    "react-test-renderer": "^16.5.2"
   },
   "husky": {
     "hooks": {
