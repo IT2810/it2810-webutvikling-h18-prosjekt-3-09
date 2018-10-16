@@ -3,6 +3,19 @@ import Index from "../index";
 
 import renderer from "react-test-renderer";
 
+jest.mock("TextInput", () => {
+  const RealComponent = require.requireActual("TextInput");
+  const React = require("React");
+  class TextInput extends React.Component {
+    render() {
+      delete this.props.autoFocus;
+      return React.createElement("TextInput", this.props, this.props.children);
+    }
+  }
+  TextInput.propTypes = RealComponent.propTypes;
+  return TextInput;
+});
+
 describe("Testing todo", () => {
   const tree = renderer.create(<Index />);
 
@@ -71,7 +84,6 @@ describe("Testing todo", () => {
         .rendered.instance.handleTitleChange(initialState.inputTitle);
       tree.toTree().rendered.instance.addNote(true);
       expect(tree.toTree().rendered.instance.state.todoList).toHaveLength(1);
-      console.log(tree.toTree().rendered.instance.state.todoList);
     });
 
     test("edit note text", () => {

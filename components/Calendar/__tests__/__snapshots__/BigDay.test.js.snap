@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BigDay snapshot. mounting  1`] = `null`;
-
 exports[`BigDay snapshot. renders correctly 1`] = `null`;
-
-exports[`BigDay snapshot. updating  1`] = `null`;

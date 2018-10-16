@@ -1,39 +1,55 @@
-export default class MockAsyncStorage {
-  constructor(cache = {}) {
-    this.storageCache = cache;
-  }
+// NOTE: Mocking AsyncStorage does not seem to work... Therefore the following code is unnecessary
 
-  setItem = jest.fn((key, value) => {
-    return new Promise((resolve, reject) => {
-      return typeof key !== "string" || typeof value !== "string"
-        ? reject(new Error("key and value must be string"))
-        : resolve((this.storageCache[key] = value));
-    });
-  });
+/*
+ * export default class MockAsyncStorage {
+ *   constructor(cache = {}) {
+ *     this.storageCache = cache;
+ *   }
+ */
 
-  getItem = jest.fn(key => {
-    return new Promise(resolve => {
-      return this.storageCache.hasOwnProperty(key)
-        ? resolve(this.storageCache[key])
-        : resolve(null);
-    });
-  });
+/*
+ *   setItem = jest.fn((key, value) => {
+ *     return new Promise((resolve, reject) => {
+ *       return typeof key !== "string" || typeof value !== "string"
+ *         ? reject(new Error("key and value must be string"))
+ *         : resolve((this.storageCache[key] = value));
+ *     });
+ *   });
+ */
 
-  removeItem = jest.fn(key => {
-    return new Promise((resolve, reject) => {
-      return this.storageCache.hasOwnProperty(key)
-        ? resolve(delete this.storageCache[key])
-        : reject("No such key!");
-    });
-  });
+/*
+ *   getItem = jest.fn(key => {
+ *     return new Promise(resolve => {
+ *       return this.storageCache.hasOwnProperty(key)
+ *         ? resolve(this.storageCache[key])
+ *         : resolve(null);
+ *     });
+ *   });
+ */
 
-  clear = jest.fn(key => {
-    return new Promise((resolve, reject) => resolve((this.storageCache = {})));
-  });
+/*
+ *   removeItem = jest.fn(key => {
+ *     return new Promise((resolve, reject) => {
+ *       return this.storageCache.hasOwnProperty(key)
+ *         ? resolve(delete this.storageCache[key])
+ *         : reject("No such key!");
+ *     });
+ *   });
+ */
 
-  getAllKeys = jest.fn(key => {
-    return new Promise((resolve, reject) =>
-      resolve(Object.keys(this.storageCache))
-    );
-  });
-}
+/*
+ *   clear = jest.fn(key => {
+ *     return new Promise((resolve, reject) => resolve((this.storageCache = {})));
+ *   });
+ */
+
+/*
+ *   getAllKeys = jest.fn(key => {
+ *     return new Promise((resolve, reject) =>
+ *       resolve(Object.keys(this.storageCache))
+ *     );
+ *   });
+ * }
+ */
+
+test("AsyncStorage Mock", () => {});

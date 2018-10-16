@@ -4,6 +4,8 @@ import App from "../App";
 import renderer from "react-test-renderer";
 import NavigationTestUtils from "react-navigation/NavigationTestUtils";
 
+jest.mock("react-native-gesture-handler", () => {});
+
 describe("App snapshot", () => {
   jest.useFakeTimers();
   beforeEach(() => {
