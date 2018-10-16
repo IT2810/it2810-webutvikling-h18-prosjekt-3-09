@@ -6,9 +6,9 @@ import {
   StyleSheet,
   Modal,
   Button,
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput
 } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import { withStore } from "../components/Store/";
 import { sendNotification } from "../components/Notification";
 
