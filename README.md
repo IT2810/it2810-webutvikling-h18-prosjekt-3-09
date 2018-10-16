@@ -17,7 +17,6 @@ using React Native.
 - Navigation
 - Moment
 - Test Renderer
-- Flex/Grid vha. responsive layout
 - Expo
 - WakaTime
 - ESlint / Prettier
@@ -85,16 +84,17 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 ```
 
 **Navigation**
-Navigation tilbyr enklere navigation mellom screens med tilhørende scripts.
+tilbyr enklere navigasjion mellom screens med tilhørende scripts.
 Vi brukte expo-cli og expo init ved start av prosjektet, slik at Navigation var allerede en del av applikasjonen.
 
 **Moment**
 Formaterer og parser datoer i henhold til den standard som ønskes.
 
 ```javascript
-{
-  value ? moment(value).format("YYYY. MMMM DD") : "not set";
-}
+//Imprts
+import DateTimePicker from "react-native-modal-datetime-picker";
+...
+{value ? moment(value).format("YYYY. MMMM DD") : "not set"}
 ```
 
 **Test Renderer**
@@ -102,6 +102,9 @@ Gjør det mulig å rendre React componenter til rene javascript objekter, uten �
 Kan brukes i samsvar med Jest for å ta et snapshot av JSON-treet, for så å kunne traversere treet og gjøre assertions.
 
 ```javascript
+//Imports
+import renderer from "react-test-renderer";
+
 test("renders correctly", () => {
   const tree = renderer.create(<TodoScreen />).toJSON();
   expect(tree).toMatchSnapshot();
@@ -118,9 +121,6 @@ Vi brukte de to overnevnte verktøyene for å sørge for at vi har en konsistent
 Vi brukte Git/Github for å holde styr på de forskjellige fasene i prosjektet. Ved hjelp av issues kunne vi lage oss en to-do liste, og ved hjelp av forskjellige branches, kunne vi være sikker på at features under utvikling var separert fra kode som vi har vurdert som ferdig. (ideen kommer fra GitFlow)
 I hver commit-melding refererer vi til en spesifik issue for å bedre holde orden på arbeidet som er utført.
 
-**Responsive layout**
-For å implementere en layout brukte vi CSS flexbox og grid. I CSS begynte vi med å implementere styling for mobile enheter først, deretter skalerte vi designet opp ved hjelp av media queries. Dette kalles mobile first design. Den letteste måten å oppnå dette er å bruke “min-width” istedenfor “max-width” i media-queries. Da kan mobilen hoppe over alle media-queries den ikke trenger, og kan derfor vise det ønskede designet raskere. På en laptop eller en stasjonær PC vil det ikke være noe merkbar forskjell at den må parse noen ekstra media queries for å vise applikasjonen. Siden CSS Grid og Flex er veldig fleksible, trengte vi bare noen media queries for å få nettsiden til å se bra ut på ulike skjermstørrelser.
-
 ### Hvordan vi oppfyller krav til funksjonalitet
 
 Applikasjonen tillater brukeren å opprette og fullføre mål, en huskeliste samt en kalender for å kunne holde orden på gjøremål og hendelser. Dette gjøres gjennom tre forskjellige tabs hvor brukeren navigerer applikasjonens innhold. Man kan selv velge en dato i kalenderen der man spesifiserer hendelsens varighet og tittel. I både Motivation og Todo -manageren kan man opprette, slette og endre mål og TO-DOs.
@@ -130,9 +130,8 @@ Oppgaven var for det meste ganske fri med tanke på hva applikasjonen skal være
 
 ## Testing
 
-Vi har testet applikasjonen med fokus på brukergrensesnitt og responsiv web design. Dette ble gjort i både Google Chrome og Firefox, og på ulike enheter med ulik skjermstørrelse. På grunn av ulik default styling av for eksempel media player i nettleserne vil applikasjonen til en viss grad se ulik ut. Dette var en minimal forskjell som ikke hadde noe effekt på funksjonaliteten og vi synes dermed at det er greit slik det er. Se vedlagte bilder.
-
-Testingen ble utført systematisk på de ulike enhetene ved å sjekke alle funksjonene for å forsikre oss om at brukergrensesnittet funker som tenkt på tvers av enheter.
+Hovedformålet vårt med testingen i prosjektet, var å forsikre oss at funksjonalitet fungerer som antatt. Vi har forsøkt å oppnå 70% code coverage for oppnå en så lav risikofaktor som mulig.
+I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner.
 
 ![image](https://user-images.githubusercontent.com/18369201/45872469-67d8c580-bd90-11e8-8d05-fa83b28031f2.png)
 Firefox / Linux
