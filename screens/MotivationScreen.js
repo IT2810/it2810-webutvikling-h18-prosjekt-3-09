@@ -56,11 +56,7 @@ class MotivationScreen extends React.Component {
 
   deleteElement = () => {
     tempData.splice(this.state.editId, 1);
-    this.setState({
-      modalInput: "",
-      editGoal: false,
-      editId: -1
-    });
+    this.resetModalState();
     this.updateData(tempData);
     this.setModalInvisible();
   };
@@ -71,14 +67,16 @@ class MotivationScreen extends React.Component {
     });
   };
 
+  resetModalState = () =>
+    this.setState({ modalInput: "", editGoal: false, editId: -1 });
+
   cancelModal = () => {
-    if (tempData != [])
+    if (tempData != []) {
+      this.resetModalState();
       this.setState({
-        modalInput: "",
-        editGoal: false,
-        editId: -1,
         dataSource: this.ds.cloneWithRows(tempData)
       });
+    }
     this.setModalInvisible();
   };
 
@@ -101,11 +99,7 @@ class MotivationScreen extends React.Component {
 
     this.updateData(tempData);
 
-    this.setState({
-      modalInput: "",
-      editGoal: false,
-      editId: -1
-    });
+    this.resetModalState();
     this.setModalInvisible();
   };
 
@@ -129,6 +123,8 @@ class MotivationScreen extends React.Component {
       </TouchableHighlight>
     );
   };
+
+  handleInputChange = modalInput => this.setState({ modalInput });
 
   render() {
     return (
@@ -165,7 +161,7 @@ class MotivationScreen extends React.Component {
             <TextInput
               style={styles.modalInput}
               placeholder="Målbeskrivelse"
-              onChangeText={modalInput => this.setState({ modalInput })}
+              onChangeText={modalInput => this.handleInputChange(modalInput)}
               value={this.state.modalInput}
             />
 
