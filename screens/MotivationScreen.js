@@ -5,18 +5,20 @@ import {
   ListView,
   StyleSheet,
   Modal,
-  Button,
   TouchableHighlight,
   TextInput
 } from "react-native";
 import { withStore } from "../components/Store/";
 import { sendNotification } from "../components/Notification";
+import { Button } from "react-native-elements";
+import { Divider } from "react-native-elements";
+import Colors from "../constants/Colors";
 
 const tempData = []; // Load with asyncstorage
 
 class MotivationScreen extends React.Component {
   static navigationOptions = {
-    title: "Motivation Manager"
+    title: "Motivation"
   };
 
   constructor() {
@@ -93,14 +95,15 @@ class MotivationScreen extends React.Component {
   };
 
   closeAndCreate = () => {
-    if (this.state.editGoal) {
-      tempData[this.state.editId] = this.state.modalInput;
-    } else {
-      tempData.push(this.state.modalInput); // unshift()  prepend, but listview is bugged
+    if (this.state.modalInput.length != 0) {
+      if (this.state.editGoal) {
+        tempData[this.state.editId] = this.state.modalInput;
+      } else {
+        tempData.push(this.state.modalInput); // unshift()  prepend, but listview is bugged
+      }
+
+      this.updateData(tempData);
     }
-
-    this.updateData(tempData);
-
     this.setState({
       modalInput: "",
       editGoal: false,
@@ -134,13 +137,16 @@ class MotivationScreen extends React.Component {
     return (
       <View style={styles.pageContainer}>
         <View style={styles.container}>
-          <TouchableHighlight
+          <Button
+            large
             onPress={this.onPressNewGoal}
-            style={styles.newElementButton}
-          >
-            <Text style={styles.buttonText}>Legg til nytt mål</Text>
-          </TouchableHighlight>
-
+            backgroundColor={Colors.color1}
+            rounded={true}
+            rightIcon={{ name: "cached" }}
+            title="Add new goal"
+            containerViewStyle={{ marginTop: 10 }}
+          />
+          <Divider style={styles.divider} />
           <ListView
             enableEmptySections={true}
             dataSource={this.state.dataSource}
@@ -154,43 +160,40 @@ class MotivationScreen extends React.Component {
           visible={this.state.modalVisible}
           style={styles.modal}
           onRequestClose={() => {
-            // console.log("Request to close modal");
             this.cancelModal;
           }}
         >
           <View style={styles.modal}>
             <Text style={styles.modalTitle}>
-              {this.state.editGoal ? "Endre mål" : "Nytt mål"}
+              {this.state.editGoal ? "Edit goal" : "New goal"}
             </Text>
             <TextInput
               style={styles.modalInput}
-              placeholder="Målbeskrivelse"
+              placeholder="Goaldescription"
               onChangeText={modalInput => this.setState({ modalInput })}
               value={this.state.modalInput}
             />
 
             <View style={styles.modalButtons}>
-              <TouchableHighlight
+              <Button
+                rounded
                 onPress={this.closeAndCreate}
-                style={styles.modalCreateButton}
-                underlayColor="#00000022"
-              >
-                <Text style={styles.buttonText}>
-                  {this.state.editGoal ? "Lagre" : "Opprett"}
-                </Text>
-              </TouchableHighlight>
-              <TouchableHighlight
+                title={this.state.editGoal ? "Save" : "Create"}
+                backgroundColor={Colors.confirmBackground}
+              />
+
+              <Button
+                rounded
                 onPress={this.cancelModal}
-                style={styles.modalCancelButton}
-                underlayColor="#aaaaaaaa"
-              >
-                <Text style={styles.buttonText}>Avbryt</Text>
-              </TouchableHighlight>
+                title="Cancel"
+                backgroundColor={Colors.cancelBackground}
+              />
               {this.state.editGoal && (
                 <Button
+                  rounded
                   onPress={this.deleteElement}
-                  style={styles.modalDeleteButton}
-                  title="Slett"
+                  backgroundColor={Colors.deleteBackground}
+                  title="Delete"
                 />
               )}
             </View>
@@ -221,7 +224,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 3 // android only
   },
+  divider: {
+    backgroundColor: Colors.lightgrey,
+    marginVertical: 10
+  },
   listElementContainer: {
+    marginTop: 10,
     marginBottom: 100
   },
 
@@ -249,7 +257,7 @@ const styles = StyleSheet.create({
     elevation: 20 // android only
   },
   modalButtons: {
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     flexDirection: "row",
     justifyContent: "space-between",
     height: 100
