@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test-watch": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "test": "node ./node_modules/jest/bin/jest.js --ci --forceExit"
+    "test": "node ./node_modules/jest/bin/jest.js --ci --forceExit",
+    "test:badge": "yarn test --coverage && npx make-coverage-badge"
   },
   "jest": {
     "preset": "jest-expo",
