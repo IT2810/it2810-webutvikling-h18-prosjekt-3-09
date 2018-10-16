@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "test-ci": "node ./node_modules/jest/bin/jest.js --ci"
+    "test-ci": "node ./node_modules/jest/bin/jest.js --ci --forceExit"
   },
   "jest": {
     "preset": "jest-expo",
