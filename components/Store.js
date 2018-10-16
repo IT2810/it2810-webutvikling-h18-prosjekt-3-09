@@ -5,15 +5,15 @@ import { sendNotification } from "./Notification";
 /**
  * This function when called, removes everything from AsyncStorage to avoid
  * problems in DEVELOPMENT mode.
+ * @see https://github.com/IT2810/it2810-webutvikling-h18-prosjekt-3-09/issues/16
+ * const purgeAsyncStorage = async () => {
+ *   try {
+ *     await AsyncStorage.clear();
+ *   } catch (error) {
+ *     sendNotification("error", error);
+ *   }
+ * };
  */
-
-const purgeAsyncStorage = async () => {
-  try {
-    await AsyncStorage.clear();
-  } catch (error) {
-    sendNotification("error", error);
-  }
-};
 
 const Store = createContext();
 /**
@@ -40,18 +40,14 @@ export const withStore = WrappedComponent =>
   };
 
 /**
- * NOTE: Once in PRODUCTION, Database can be changed to stateless function componnent
- * ie.: No need for componentDidMount lifecycle method.
+ * The Database Component.
+ * It uses React Context API,
+ * a global state can be added,
+ * much like Redux should work.
+ * Right now it only contians a
+ * getter and setter for AsyncStorage
  */
 export default class Database extends Component {
-  componentDidMount = async () => {
-    /**
-     * Purge AsyncStorage on EXPO refresh.
-     * REMOVE 🔥 in PRODUCTION ❗
-     */
-    purgeAsyncStorage();
-  };
-
   /**
    * Read from the Database
    * @param {String} key key of the element to retrieved
@@ -59,7 +55,7 @@ export default class Database extends Component {
    */
   readFromAsyncStorage = async key => {
     try {
-      const value = await AsyncStorage.getItem(`@PersonalManagerStore:${key}`);
+      const value = await AsyncStorage.getItem(key);
       // console.log("Data was retrieved from AsyncStorage", value);
       return JSON.parse(value);
     } catch (error) {
@@ -79,7 +75,6 @@ export default class Database extends Component {
         `@PersonalManagerStore:${key}`,
         JSON.stringify(value)
       );
-      // console.log("Data was written to AsyncStorage", value);
     } catch (error) {
       // Error saving data
       sendNotification("error", error);
