@@ -13,7 +13,7 @@
   "jest": {
     "preset": "jest-expo",
     "coverageReporters": [
-      "json",
+      "json-summary",
       "html"
     ]
   },
@@ -39,6 +39,7 @@
     "eslint-plugin-react-native": "^3.3.0",
     "husky": "^1.1.1",
     "jest-expo": "30.0.0",
+    "make-coverage-badge": "^1.0.1",
     "prettier": "^1.14.3",
     "pretty-quick": "^1.7.0",
     "react-test-renderer": "^16.5.2"
