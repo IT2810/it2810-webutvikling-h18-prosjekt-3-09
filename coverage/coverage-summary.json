@@ -1,9 +1,9 @@
 {
   "total": {
-    "lines": { "total": 231, "covered": 183, "skipped": 0, "pct": 79.22 },
-    "statements": { "total": 238, "covered": 189, "skipped": 0, "pct": 79.41 },
+    "lines": { "total": 233, "covered": 185, "skipped": 0, "pct": 79.4 },
+    "statements": { "total": 240, "covered": 191, "skipped": 0, "pct": 79.58 },
     "functions": { "total": 110, "covered": 75, "skipped": 0, "pct": 68.18 },
-    "branches": { "total": 116, "covered": 87, "skipped": 0, "pct": 75 }
+    "branches": { "total": 118, "covered": 88, "skipped": 0, "pct": 74.58 }
   },
   "/home/balazs/projects/it2810-webutvikling-h18-prosjekt-3-09/App.js": {
     "lines": { "total": 7, "covered": 6, "skipped": 0, "pct": 85.71 },
@@ -144,10 +144,10 @@
     "branches": { "total": 2, "covered": 1, "skipped": 0, "pct": 50 }
   },
   "/home/balazs/projects/it2810-webutvikling-h18-prosjekt-3-09/screens/MotivationScreen.js": {
-    "lines": { "total": 40, "covered": 31, "skipped": 0, "pct": 77.5 },
+    "lines": { "total": 42, "covered": 33, "skipped": 0, "pct": 78.57 },
     "functions": { "total": 18, "covered": 12, "skipped": 0, "pct": 66.67 },
-    "statements": { "total": 41, "covered": 31, "skipped": 0, "pct": 75.61 },
-    "branches": { "total": 14, "covered": 8, "skipped": 0, "pct": 57.14 }
+    "statements": { "total": 43, "covered": 33, "skipped": 0, "pct": 76.74 },
+    "branches": { "total": 16, "covered": 9, "skipped": 0, "pct": 56.25 }
   },
   "/home/balazs/projects/it2810-webutvikling-h18-prosjekt-3-09/screens/TodoScreen.js": {
     "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
