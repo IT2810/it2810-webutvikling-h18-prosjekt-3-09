@@ -34,16 +34,8 @@ class Calendar extends Component {
   }
 
   componentDidUpdate = (_prevProps, { currentMonth: prevCurrentMonth }) => {
-    const { onChange, min } = this.props;
-
-    const { currentMonth, start: currentStart, end: currentEnd } = this.state;
-
+    const { currentMonth } = this.state;
     if (!prevCurrentMonth.isSame(currentMonth, "month")) this.getWeeks();
-    if (min && !this.state.min) this.setState({ min });
-    if (this.state.shouldUpdate) {
-      onChange(currentStart, currentEnd);
-      this.setState({ shouldUpdate: false });
-    }
   };
 
   getWeeks = () => {
