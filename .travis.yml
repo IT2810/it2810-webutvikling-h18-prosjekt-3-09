@@ -6,4 +6,4 @@ branches:
     - master
     - develop
 build:
-  - yarn test-ci
+  - yarn test
