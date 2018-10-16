@@ -6,7 +6,7 @@ Web development course @ NTNU by
 
 using React Native.
 
-# Prosjekt 3
+# Prosjekt 3 [![Build Status](https://travis-ci.com/IT2810/it2810-webutvikling-h18-prosjekt-3-09.svg?branch=develop)](https://travis-ci.com/IT2810/it2810-webutvikling-h18-prosjekt-3-09)
 
 ## Teknologier brukt i prosjektet
 
