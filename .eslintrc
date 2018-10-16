@@ -9,7 +9,7 @@
   "rules": {
     "prettier/prettier": "error",
     "no-multiple-empty-lines":"error",
-    "no-console":"warn",
+    "no-console":"error",
     "multiline-comment-style":"error"
   },
   "parserOptions": {
