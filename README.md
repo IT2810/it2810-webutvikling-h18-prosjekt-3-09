@@ -7,6 +7,7 @@ Web development course @ NTNU by
 using React Native.
 
 # Prosjekt 3 [![Build Status](https://travis-ci.com/IT2810/it2810-webutvikling-h18-prosjekt-3-09.svg?branch=master)](https://travis-ci.com/IT2810/it2810-webutvikling-h18-prosjekt-3-09) ![Coverage](https://raw.githubusercontent.com/IT2810/it2810-webutvikling-h18-prosjekt-3-09/master/docs/badge.svg?sanitize=true)
+
 ## Teknologier brukt i prosjektet
 
 - React Native/ ES6
@@ -129,7 +130,7 @@ Oppgaven var for det meste ganske fri med tanke på hva applikasjonen skal være
 
 ## Testing
 
-Hovedformålet vårt med testingen i prosjektet, var å forsikre oss at funksjonalitet fungerer som antatt. Vi har forsøkt å oppnå 70% code coverage for oppnå en så lav risikofaktor som mulig.
+Hovedformålet vårt med testingen i prosjektet, var å forsikre oss at funksjonalitet fungerer som antatt. Vi har forsøkt å oppnå 80% code coverage for oppnå en så lav risikofaktor som mulig.
 For en detaljert code coverage [trykk her](https://it2810.github.io/it2810-webutvikling-h18-prosjekt-3-09/index.html).
 
 I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner.
