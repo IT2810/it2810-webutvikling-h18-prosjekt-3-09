@@ -55,7 +55,7 @@ export default class Database extends Component {
    */
   readFromAsyncStorage = async key => {
     try {
-      const value = await AsyncStorage.getItem(key);
+      const value = await AsyncStorage.getItem(`@PersonalManagerStore:${key}`);
       // console.log("Data was retrieved from AsyncStorage", value);
       return JSON.parse(value);
     } catch (error) {
