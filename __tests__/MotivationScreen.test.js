@@ -62,7 +62,9 @@ describe("Testing MotivationScreen", () => {
     test("create goal successfully", () => {
       tree.toTree().rendered.instance.handleInputChange("Walk");
       tree.toTree().rendered.instance.closeAndCreate();
-      expect(tree.toTree().rendered.instance.state.data).toEqual(["Walk"]);
+      expect(tree.toTree().rendered.instance.state.managerData).toEqual([
+        "Walk"
+      ]);
     });
 
     describe("Select a goal", () => {
@@ -89,7 +91,7 @@ describe("Testing MotivationScreen", () => {
 
     test("delete goal successfully", () => {
       tree.toTree().rendered.instance.deleteElement();
-      expect(tree.toTree().rendered.instance.state.data).toHaveLength(0);
+      expect(tree.toTree().rendered.instance.state.managerData).toHaveLength(0);
     });
   });
 });
