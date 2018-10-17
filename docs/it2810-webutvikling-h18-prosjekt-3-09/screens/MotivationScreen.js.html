@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.74% </span>
+        <span class="strong">78% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>33/43</span>
+        <span class='fraction'>39/50</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">56.25% </span>
+        <span class="strong">64.29% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>9/16</span>
+        <span class='fraction'>9/14</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">66.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>12/18</span>
+        <span class='fraction'>14/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">78.57% </span>
+        <span class="strong">80.85% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>33/42</span>
+        <span class='fraction'>38/47</span>
       </div>
     </div>
   </div>
@@ -349,7 +349,12 @@
 304
 305
 306
-307</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+307
+308
+309
+310
+311
+312</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -364,8 +369,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -408,6 +411,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -424,6 +429,7 @@
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -446,12 +452,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -486,7 +496,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -671,15 +681,13 @@ import { Button } from "react-native-elements";
 import { Divider } from "react-native-elements";
 import Colors from "../constants/Colors";
 &nbsp;
-const tempData = []; // Load with asyncstorage
-&nbsp;
 class MotivationScreen extends React.Component {
   static navigationOptions = {
     title: "Motivation"
   };
 &nbsp;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: <span class="fstat-no" title="function not covered" >(r</span>1, r2) =&gt; <span class="cstat-no" title="statement not covered" >r1 !== r2 </span>});
     this.state = {
       managerData: [],
@@ -695,7 +703,7 @@ class MotivationScreen extends React.Component {
     try {
       const savedData = await this.props.actions.getItem("managerData"); // datakey is either string of 'todo' or 'manager', essentially the key of the data where you store it in AsyncStorage
 <span class="cstat-no" title="statement not covered" >      this.setState({ managerData: savedData || [] }); </span>// If no data was found in AsyncStorage, set an empty array
-<span class="cstat-no" title="statement not covered" >      tempData = savedData || [];</span>
+<span class="cstat-no" title="statement not covered" >      this.updateListRows();</span>
       // console.log("successfully mounted");
     } catch (error) {
       sendNotification("error", error); // To give error feedback
@@ -703,10 +711,10 @@ class MotivationScreen extends React.Component {
   }
 &nbsp;
   // Use this function to update both the local state, and the database at the same time.
-  updateData = async data =&gt; {
+  updateData = async managerData =&gt; {
     try {
-      this.setState({ data: data });
-      await this.props.actions.setItem("managerData", data);
+      this.setState({ managerData });
+      await this.props.actions.setItem("managerData", managerData);
 <span class="cstat-no" title="statement not covered" >      this.updateListRows();</span>
     } catch (error) {
       sendNotification("error", error);
@@ -714,9 +722,11 @@ class MotivationScreen extends React.Component {
   };
 &nbsp;
   deleteElement = () =&gt; {
-    tempData.splice(this.state.editId, 1);
+    const { managerData, editId } = this.state;
     this.resetModalState();
-    this.updateData(tempData);
+    const newManagerData = [...managerData];
+    newManagerData.splice(editId, 1);
+    this.updateData(newManagerData);
     this.setModalInvisible();
   };
 &nbsp;
@@ -730,19 +740,20 @@ class MotivationScreen extends React.Component {
     this.setState({ modalInput: "", editGoal: false, editId: -1 });
 &nbsp;
   cancelModal = () =&gt; {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (tempData != []) {
+    const { managerData } = this.state;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (managerData.length) {
       this.resetModalState();
       this.setState({
-        dataSource: this.ds.cloneWithRows(tempData)
+        dataSource: this.ds.cloneWithRows(managerData)
       });
     }
     this.setModalInvisible();
   };
 &nbsp;
   updateListRows = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >    this.setState({</span>
-      dataSource: this.ds.cloneWithRows(tempData)
-    });
+<span class="cstat-no" title="statement not covered" >    this.setState(<span class="fstat-no" title="function not covered" >({</span> managerData }) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
+      dataSource: this.ds.cloneWithRows(managerData)
+    }));
   };
 &nbsp;
   setModalInvisible = () =&gt; {
@@ -750,14 +761,18 @@ class MotivationScreen extends React.Component {
   };
 &nbsp;
   closeAndCreate = () =&gt; {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.state.modalInput.length != 0) {
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (this.state.editGoal) {
-<span class="cstat-no" title="statement not covered" >        tempData[this.state.editId] = this.state.modalInput;</span>
+    const { modalInput, editGoal, editId, managerData } = this.state;
+    const newManagerData = [...managerData];
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (modalInput.length) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (editGoal) {
+<span class="cstat-no" title="statement not covered" >        newManagerData[editId] = modalInput;</span>
       } else {
-        tempData.push(this.state.modalInput); // unshift()  prepend, but listview is bugged
+        newManagerData.push(modalInput);
       }
 &nbsp;
-      this.updateData(tempData);
+      this.setState({ managerData: newManagerData }, () =&gt; {
+        this.updateData(this.state.managerData);
+      });
     }
     this.setState({
       modalInput: "",
@@ -769,15 +784,15 @@ class MotivationScreen extends React.Component {
   };
 &nbsp;
   onRowPress = rowID =&gt; {
-    this.setState({
+    this.setState(({ managerData }) =&gt; ({
       editGoal: true,
       editId: rowID,
-      modalInput: tempData[rowID],
+      modalInput: managerData[rowID],
       modalVisible: true
-    });
+    }));
   };
 &nbsp;
-  renderListRow = <span class="fstat-no" title="function not covered" >(r</span>owData, sectionID, rowID) =&gt; {
+  renderListRow = <span class="fstat-no" title="function not covered" >(r</span>owData, _sectionID, rowID) =&gt; {
 <span class="cstat-no" title="statement not covered" >    return (</span>
       &lt;TouchableHighlight
         onPress={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.onRowPress(rowID)}</span>
@@ -967,7 +982,7 @@ const styles = StyleSheet.create({
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 16 2018 14:47:03 GMT+0200 (CEST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 17 2018 10:58:44 GMT+0200 (CEST)
 </div>
 </div>
 <script src="../../prettify.js"></script>
