@@ -140,7 +140,7 @@ Oppgaven var for det meste ganske fri med tanke på hva applikasjonen skal være
 Hovedformålet vårt med testingen i prosjektet, var å forsikre oss at funksjonalitet fungerer som antatt. Vi har forsøkt å oppnå 80% code coverage for oppnå en så lav risikofaktor som mulig.
 For en detaljert code coverage [trykk her](https://it2810.github.io/it2810-webutvikling-h18-prosjekt-3-09/index.html).
 
-I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner.
+I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner. Vi utførte manuelle tester som simulerte tenkt bruk av appen for å forsikre oss om at appen oppfører seg slik vi ønsker.
 
 
 
