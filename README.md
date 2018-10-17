@@ -134,11 +134,14 @@ For en detaljert code coverage [trykk her](https://it2810.github.io/it2810-webut
 
 I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner.
 
-![image](https://user-images.githubusercontent.com/18369201/45872469-67d8c580-bd90-11e8-8d05-fa83b28031f2.png)
-Firefox / Linux
+![screenshot_20181016-151659](https://user-images.githubusercontent.com/22095633/47074299-703ee780-d1fa-11e8-8e71-5d8e935c1c42.jpg)
 
-![image](https://user-images.githubusercontent.com/18369201/45872542-8dfe6580-bd90-11e8-9bf6-dc91d891a07d.png)
-Google Chrome / Linux
+Todo on android
 
-![screenshot_20180921-103351_2](https://user-images.githubusercontent.com/22095633/45872577-a79fad00-bd90-11e8-8a60-4dfc1da024c8.jpg)
-Google Chrome / Mobil
+![screenshot_20181016-151411](https://user-images.githubusercontent.com/22095633/47074576-f78c5b00-d1fa-11e8-8ab7-9b7305145bdc.jpg)
+
+Calendar on android
+
+![screenshot_20181016-151449](https://user-images.githubusercontent.com/22095633/47074553-ee9b8980-d1fa-11e8-9b91-59369ef1b4d4.jpg)
+
+Motivation on android
