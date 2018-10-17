@@ -11,17 +11,21 @@ using React Native.
 ## Teknologier brukt i prosjektet
 
 - React Native/ ES6
+- AsyncStorage
+- Expo
+- WakaTime
+- ESlint / Prettier
+- Git / Github
+- VSCode
+
+## Tredjepartsbiblioteker
+
 - Easy Grid
 - Elements
 - Modal Datetime Picker
 - Navigation
 - Moment
 - Test Renderer
-- Expo
-- WakaTime
-- ESlint / Prettier
-- Git / Github
-- VSCode
 
 ### Hvordan vi oppfyller krav til teknologi
 
@@ -31,8 +35,20 @@ Den tillater oss å utvikle en applikasjon for Android og iOS samtidig, samt at 
 
 Vi har strukturert applikasjonen i komponenter som er implementert med class, noe som gjorde utviklingen oversiktlig og forståelig. Det gjorde også at vi kunne utvikle de ulike komponentene uavhengig av hverandre. Dette gjorde at gruppen jobber mer effektivt.
 
+Vi har ikke implementert noe form for gps, pedometer eller dirkete kommunikasjon i appen vår. Dette begrunnes med for lite tid satt av til issue #2 som omhandlet implementering av gps.
+
 **AsyncStorage**
 Lagrer data asynkront og ukryptert på enheten som nøkkel-datapar. Måten data lagres på kommer an på enhetens operativsystem, og det er sterkt anbefalt å ha et abstraksjonsnivå over AsyncStorage dersom noe mer enn simple operasjoner skal utføres. Dette inkluderer kryptering av data, dersom sensitiv informasjon om brukeren skal behandles.
+
+**WakaTime**
+For å følge med hvor mye enkelte personer jobbet i gruppen, istedenfor å loggføre det manuelt, brukte vi WakaTime. Det er en tjeneste (som er lett installert i de fleste populære IDEs som VS Code) som måler tidsbruk på brancher, og filer. For resultatet, se vedlagt PDF fil.
+
+**ESlint / Prettier**
+Vi brukte de to overnevnte verktøyene for å sørge for at vi har en konsistent kode, uavhengig av hvor mange som måtte jobbe på prosjektet vårt. ESlint markerer koden til utvikleren som ikke samsvarer med den forhåndsdefinerte kodeformatteringen. Deretter bruker Prettier denne formatteringen for å skrive om filen ved lagring. Med dette, kan alle skrive i sin egen stil og fortsatt være sikker på at resultatet er konsistent.
+
+**Git / Github**
+Vi brukte Git/Github for å holde styr på de forskjellige fasene i prosjektet. Ved hjelp av issues kunne vi lage oss en to-do liste, og ved hjelp av forskjellige branches, kunne vi være sikker på at features under utvikling var separert fra kode som vi har vurdert som ferdig. (ideen kommer fra GitFlow)
+I hver commit-melding refererer vi til en spesifik issue for å bedre holde orden på arbeidet som er utført.
 
 ### Tredjepartsbiblioteker
 
@@ -111,15 +127,6 @@ test("renders correctly", () => {
 });
 ```
 
-**WakaTime**
-For å følge med hvor mye enkelte personer jobbet i gruppen, istedenfor å loggføre det manuelt, brukte vi WakaTime. Det er en tjeneste (som er lett installert i de fleste populære IDEs som VS Code) som måler tidsbruk på brancher, og filer. For resultatet, se vedlagt PDF fil.
-
-**ESlint / Prettier**
-Vi brukte de to overnevnte verktøyene for å sørge for at vi har en konsistent kode, uavhengig av hvor mange som måtte jobbe på prosjektet vårt. ESlint markerer koden til utvikleren som ikke samsvarer med den forhåndsdefinerte kodeformatteringen. Deretter bruker Prettier denne formatteringen for å skrive om filen ved lagring. Med dette, kan alle skrive i sin egen stil og fortsatt være sikker på at resultatet er konsistent.
-
-**Git / Github**
-Vi brukte Git/Github for å holde styr på de forskjellige fasene i prosjektet. Ved hjelp av issues kunne vi lage oss en to-do liste, og ved hjelp av forskjellige branches, kunne vi være sikker på at features under utvikling var separert fra kode som vi har vurdert som ferdig. (ideen kommer fra GitFlow)
-I hver commit-melding refererer vi til en spesifik issue for å bedre holde orden på arbeidet som er utført.
 
 ### Hvordan vi oppfyller krav til funksjonalitet
 
@@ -135,14 +142,7 @@ For en detaljert code coverage [trykk her](https://it2810.github.io/it2810-webut
 
 I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner.
 
-![screenshot_20181016-151659](https://user-images.githubusercontent.com/22095633/47074299-703ee780-d1fa-11e8-8e71-5d8e935c1c42.jpg)
 
-Todo on android
 
-![screenshot_20181016-151411](https://user-images.githubusercontent.com/22095633/47074576-f78c5b00-d1fa-11e8-8ab7-9b7305145bdc.jpg)
 
-Calendar on android
-
-![screenshot_20181016-151449](https://user-images.githubusercontent.com/22095633/47074553-ee9b8980-d1fa-11e8-9b91-59369ef1b4d4.jpg)
-
-Motivation on android
+| ![screenshot_20181016-151449](https://user-images.githubusercontent.com/22095633/47074553-ee9b8980-d1fa-11e8-9b91-59369ef1b4d4.jpg) |  ![screenshot_20181016-151411](https://user-images.githubusercontent.com/22095633/47074576-f78c5b00-d1fa-11e8-8ab7-9b7305145bdc.jpg) | ![screenshot_20181016-151659](https://user-images.githubusercontent.com/22095633/47074299-703ee780-d1fa-11e8-8e71-5d8e935c1c42.jpg) |
