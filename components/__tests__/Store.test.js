@@ -4,10 +4,8 @@ import Store from "../Store";
 /*
  * import MockStorage from "./__mocks__/AsyncStorage";
  * import * as notification from "../Notification";
- */
-
-const testObject = { test: "test" };
-/*
+ *
+ * const testObject = { test: "test" };
  * const storageCache = { "@PersonalManagerStore:test": testObject };
  * const AsyncStorage = new MockStorage(storageCache);
  * jest.setMock("AsyncStorage", AsyncStorage);
@@ -24,9 +22,12 @@ describe("Store snapshot", () => {
     expect(tree).toMatchSnapshot();
   });
 
-  // NOTE: Mocking AsyncStorage does not seem to work... Therefore none of the following tests do
-
   /*
+   * NOTE: Mocking AsyncStorage does not seem to work... 
+   * Therefore none of the following tests work.
+   * Leaving here for reference.
+   *
+   *
    * test("Data is written to AsyncStorage", () => {
    *   expect.assertions(1);
    *   return tree
