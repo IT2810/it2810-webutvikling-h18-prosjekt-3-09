@@ -14,15 +14,13 @@ import { Button } from "react-native-elements";
 import { Divider } from "react-native-elements";
 import Colors from "../constants/Colors";
 
-const tempData = []; // Load with asyncstorage
-
 class MotivationScreen extends React.Component {
   static navigationOptions = {
     title: "Motivation"
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       managerData: [],
@@ -38,7 +36,7 @@ class MotivationScreen extends React.Component {
     try {
       const savedData = await this.props.actions.getItem("managerData"); // datakey is either string of 'todo' or 'manager', essentially the key of the data where you store it in AsyncStorage
       this.setState({ managerData: savedData || [] }); // If no data was found in AsyncStorage, set an empty array
-      tempData = savedData || [];
+      this.updateListRows();
       // console.log("successfully mounted");
     } catch (error) {
       sendNotification("error", error); // To give error feedback
@@ -46,10 +44,10 @@ class MotivationScreen extends React.Component {
   }
 
   // Use this function to update both the local state, and the database at the same time.
-  updateData = async data => {
+  updateData = async managerData => {
     try {
-      this.setState({ data: data });
-      await this.props.actions.setItem("managerData", data);
+      this.setState({ managerData });
+      await this.props.actions.setItem("managerData", managerData);
       this.updateListRows();
     } catch (error) {
       sendNotification("error", error);
@@ -57,9 +55,11 @@ class MotivationScreen extends React.Component {
   };
 
   deleteElement = () => {
-    tempData.splice(this.state.editId, 1);
+    const { managerData, editId } = this.state;
     this.resetModalState();
-    this.updateData(tempData);
+    const newManagerData = [...managerData];
+    newManagerData.splice(editId, 1);
+    this.updateData(newManagerData);
     this.setModalInvisible();
   };
 
@@ -73,19 +73,20 @@ class MotivationScreen extends React.Component {
     this.setState({ modalInput: "", editGoal: false, editId: -1 });
 
   cancelModal = () => {
-    if (tempData != []) {
+    const { managerData } = this.state;
+    if (managerData.length) {
       this.resetModalState();
       this.setState({
-        dataSource: this.ds.cloneWithRows(tempData)
+        dataSource: this.ds.cloneWithRows(managerData)
       });
     }
     this.setModalInvisible();
   };
 
   updateListRows = () => {
-    this.setState({
-      dataSource: this.ds.cloneWithRows(tempData)
-    });
+    this.setState(({ managerData }) => ({
+      dataSource: this.ds.cloneWithRows(managerData)
+    }));
   };
 
   setModalInvisible = () => {
@@ -93,14 +94,18 @@ class MotivationScreen extends React.Component {
   };
 
   closeAndCreate = () => {
-    if (this.state.modalInput.length != 0) {
-      if (this.state.editGoal) {
-        tempData[this.state.editId] = this.state.modalInput;
+    const { modalInput, editGoal, editId, managerData } = this.state;
+    const newManagerData = [...managerData];
+    if (modalInput.length) {
+      if (editGoal) {
+        newManagerData[editId] = modalInput;
       } else {
-        tempData.push(this.state.modalInput); // unshift()  prepend, but listview is bugged
+        newManagerData.push(modalInput);
       }
 
-      this.updateData(tempData);
+      this.setState({ managerData: newManagerData }, () => {
+        this.updateData(this.state.managerData);
+      });
     }
     this.setState({
       modalInput: "",
@@ -112,15 +117,15 @@ class MotivationScreen extends React.Component {
   };
 
   onRowPress = rowID => {
-    this.setState({
+    this.setState(({ managerData }) => ({
       editGoal: true,
       editId: rowID,
-      modalInput: tempData[rowID],
+      modalInput: managerData[rowID],
       modalVisible: true
-    });
+    }));
   };
 
-  renderListRow = (rowData, sectionID, rowID) => {
+  renderListRow = (rowData, _sectionID, rowID) => {
     return (
       <TouchableHighlight
         onPress={() => this.onRowPress(rowID)}
