@@ -2137,7 +2137,7 @@ exports[`Calendar snapshot renders correctly 1`] = `
                   undefined,
                   undefined,
                   Object {
-                    "backgroundColor": "#851e3e",
+                    "backgroundColor": "transparent",
                   },
                   undefined,
                   Object {
@@ -2181,7 +2181,7 @@ exports[`Calendar snapshot renders correctly 1`] = `
                       },
                       undefined,
                       Object {
-                        "color": "#ededed",
+                        "color": "#444",
                       },
                       undefined,
                       undefined,
@@ -2367,7 +2367,7 @@ exports[`Calendar snapshot renders correctly 1`] = `
                   undefined,
                   undefined,
                   Object {
-                    "backgroundColor": "transparent",
+                    "backgroundColor": "#851e3e",
                   },
                   undefined,
                   Object {
@@ -2411,7 +2411,7 @@ exports[`Calendar snapshot renders correctly 1`] = `
                       },
                       undefined,
                       Object {
-                        "color": "#444",
+                        "color": "#ededed",
                       },
                       undefined,
                       undefined,
