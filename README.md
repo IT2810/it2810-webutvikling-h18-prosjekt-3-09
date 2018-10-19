@@ -140,9 +140,14 @@ Oppgaven var for det meste ganske fri med tanke på hva applikasjonen skal være
 Hovedformålet vårt med testingen i prosjektet, var å forsikre oss at funksjonalitet fungerer som antatt. Vi har forsøkt å oppnå 80% code coverage for oppnå en så lav risikofaktor som mulig.
 For en detaljert code coverage [trykk her](https://it2810.github.io/it2810-webutvikling-h18-prosjekt-3-09/index.html).
 
-I tilegg har vi testet applikasjonen på ulike android-enheter, med server på både Windows og Linux -maskiner. Vi utførte manuelle tester som simulerte tenkt bruk av appen for å forsikre oss om at appen oppfører seg slik vi ønsker.
+I tilegg har vi testet applikasjonen på ulike 🤖 android-enheter, med server på både Windows og 🐧 Linux -maskiner. Vi utførte manuelle tester som simulerte tenkt bruk av appen for å forsikre oss om at appen oppfører seg slik vi ønsker. Vi hadde ikke mulighet å teste for 🍏 iOS, da ingen av oss i gruppa hadde verken Mac, eller iPhone. [Testing av iOS går kun på iPhone eller Mac](https://forums.expo.io/t/ios-emulator-for-windows/2068/2) 
+
+Expo sin egen kommentar om iOS simulator installasjon [link](https://docs.expo.io/versions/latest/introduction/installation#ios-simulator) 
+:
+> It'll take a while, go have a nap. 
 
 
 
+Noen skjermbilder av appen:
 
 | ![screenshot_20181016-151449](https://user-images.githubusercontent.com/22095633/47074553-ee9b8980-d1fa-11e8-9b91-59369ef1b4d4.jpg) |  ![screenshot_20181016-151411](https://user-images.githubusercontent.com/22095633/47074576-f78c5b00-d1fa-11e8-8ab7-9b7305145bdc.jpg) | ![screenshot_20181016-151659](https://user-images.githubusercontent.com/22095633/47074299-703ee780-d1fa-11e8-8e71-5d8e935c1c42.jpg) |
